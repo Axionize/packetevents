@@ -18,11 +18,9 @@
 
 package io.github.retrooper.packetevents.factory.fabric;
 
-import com.github.retrooper.packetevents.PacketEvents;
 import com.github.retrooper.packetevents.PacketEventsAPI;
 import com.github.retrooper.packetevents.PacketEvents;
 import com.github.retrooper.packetevents.injector.ChannelInjector;
-import com.github.retrooper.packetevents.manager.protocol.ProtocolManager;
 import com.github.retrooper.packetevents.protocol.PacketSide;
 import com.github.retrooper.packetevents.protocol.player.User;
 import io.github.retrooper.packetevents.handler.PacketDecoder;
@@ -37,10 +35,10 @@ import static com.github.retrooper.packetevents.PacketEvents.ENCODER_NAME;
 public class FabricChannelInjector implements ChannelInjector {
 
     private final PacketSide packetSide;
-    private final FabricPacketEventsAPI fabricPacketEventsAPI;
+    private final PacketEventsAPI<?> packetEventsAPI;
 
-    public FabricChannelInjector(FabricPacketEventsAPI fabricPacketEventsAPI, EnvType environment) {
-        this.fabricPacketEventsAPI = fabricPacketEventsAPI;
+    public FabricChannelInjector(PacketEventsAPI<?> packetEventsAPI, EnvType environment) {
+        this.packetEventsAPI = packetEventsAPI;
         this.packetSide = switch (environment) {
             case SERVER -> PacketSide.SERVER;
             case CLIENT -> PacketSide.CLIENT;
@@ -70,7 +68,7 @@ public class FabricChannelInjector implements ChannelInjector {
 
     @Override
     public void updateUser(Object channel, User user) {
-        if (!fabricPacketEventsAPI.getProtocolManager().hasChannel(channel)) {
+        if (!packetEventsAPI.getProtocolManager().hasChannel(channel)) {
             return; // this channel isn't injected by packetevents
         }
         Channel ch = (Channel) channel;
@@ -80,7 +78,7 @@ public class FabricChannelInjector implements ChannelInjector {
 
     @Override
     public void setPlayer(Object channel, Object player) {
-        if (!fabricPacketEventsAPI.getProtocolManager().hasChannel(channel)) {
+        if (!packetEventsAPI.getProtocolManager().hasChannel(channel)) {
             return; // this channel isn't injected by packetevents
         }
         Channel ch = (Channel) channel;
