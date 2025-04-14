@@ -112,7 +112,7 @@ public enum ClientVersion {
     LOWER_THAN_SUPPORTED_VERSIONS(V_1_7_10.protocolVersion - 1, true),
     //TODO UPDATE Update HIGHER_THAN_SUPPORTED_VERSIONS field
     @Deprecated
-    HIGHER_THAN_SUPPORTED_VERSIONS(V_1_21_4.protocolVersion + 1, true),
+    HIGHER_THAN_SUPPORTED_VERSIONS(getLatest().protocolVersion + 1, true),
 
     UNKNOWN(-1, true);
 
