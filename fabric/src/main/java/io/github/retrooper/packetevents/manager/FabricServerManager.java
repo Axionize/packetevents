@@ -24,6 +24,9 @@ import com.github.retrooper.packetevents.protocol.player.User;
 import com.github.retrooper.packetevents.util.mappings.GlobalRegistryHolder;
 import io.github.retrooper.packetevents.impl.netty.manager.server.ServerManagerAbstract;
 import net.fabricmc.loader.api.FabricLoader;
+import net.fabricmc.loader.impl.FabricLoaderImpl;
+import net.fabricmc.loader.impl.game.GameProvider;
+import net.minecraft.MinecraftVersion;
 import net.minecraft.SharedConstants;
 
 public class FabricServerManager extends ServerManagerAbstract {
@@ -31,11 +34,10 @@ public class FabricServerManager extends ServerManagerAbstract {
     private ServerVersion version;
 
     private ServerVersion resolveVersion() {
-        String mcVersion = FabricLoader.getInstance().getModContainer("minecraft")
-                .flatMap(mod -> mod.getMetadata().getVersion().getFriendlyString().describeConstable())
-                .orElse("unknown");
+        GameProvider gameProvider = ((FabricLoaderImpl) FabricLoader.getInstance()).getGameProvider();
+        String mcVersion = gameProvider.getRawGameVersion();
         for (ServerVersion version : ServerVersion.reversedValues()) {
-            if (mcVersion.contains(version.getReleaseName())) {
+            if (mcVersion.equals(version.getReleaseName())) {
                 return version;
             }
         }

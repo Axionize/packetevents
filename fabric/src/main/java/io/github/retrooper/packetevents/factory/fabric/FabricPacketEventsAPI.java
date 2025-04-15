@@ -38,13 +38,10 @@ import io.github.retrooper.packetevents.manager.FabricProtocolManager;
 import io.github.retrooper.packetevents.manager.FabricServerManager;
 import io.github.retrooper.packetevents.manager.InternalFabricPacketListener;
 import io.github.retrooper.packetevents.util.viaversion.ViaVersionUtil;
-import io.netty.util.internal.logging.Slf4JLoggerFactory;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.loader.impl.game.minecraft.Slf4jLogHandler;
 
 import java.util.Locale;
-import java.util.logging.Logger;
 
 public class FabricPacketEventsAPI extends PacketEventsAPI<ModInitializer> {
     private final String modId;
