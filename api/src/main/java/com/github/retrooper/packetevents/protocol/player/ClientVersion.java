@@ -24,7 +24,10 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * Client Version.
@@ -104,7 +107,37 @@ public enum ClientVersion {
      * 1.21.2 and 1.21.3 have the same protocol version.
      */
     V_1_21_2(768),
+
+    // Snapshots for 1.21.4
+    V_24W44A(1073742044, true),
+    V_24W45A(1073742045, true),
+    V_24W46A(1073742046, true),
+    V_1_21_4_PRE1(1073742047, true),
+    V_1_21_4_PRE2(1073742048, true),
+    V_1_21_4_PRE3(1073742049, true),
+    V_1_21_4_RC1(1073742050, true),
+    V_1_21_4_RC2(1073742051, true),
+    V_1_21_4_RC3(1073742052, true),
+
     V_1_21_4(769),
+
+    // Snapshots for 1.21.5 (newer than 1.21.4 but older than 1.21.5)
+    V_25W02A(1073742053, true),
+    V_25W03A(1073742054, true),
+    V_25W04A(1073742055, true),
+    V_25W05A(1073742056, true),
+    V_25W06A(1073742057, true),
+    V_25W07A(1073742058, true),
+    V_25W08A(1073742059, true),
+    V_25W09A(1073742060, true),
+    V_25W09B(1073742061, true),
+    V_25W10A(1073742062, true),
+    V_1_21_5_PRE1(1073742063, true),
+    V_1_21_5_PRE2(1073742064, true),
+    V_1_21_5_PRE3(1073742065, true),
+    V_1_21_5_RC1(1073742066, true),
+    V_1_21_5_RC2(1073742067, true),
+
     V_1_21_5(770),
     //TODO UPDATE Add new protocol version field
 
@@ -112,17 +145,29 @@ public enum ClientVersion {
     LOWER_THAN_SUPPORTED_VERSIONS(V_1_7_10.protocolVersion - 1, true),
     //TODO UPDATE Update HIGHER_THAN_SUPPORTED_VERSIONS field
     @Deprecated
-    HIGHER_THAN_SUPPORTED_VERSIONS(getLatest().protocolVersion + 1, true),
+    HIGHER_THAN_SUPPORTED_VERSIONS(V_1_21_5.protocolVersion + 1, true),
 
     UNKNOWN(-1, true);
 
+    private static final int SNAPSHOT_OFFSET = 0x40000000;
+    // TODO, replace with FastUtil
+    // No ConcurrentHashMap needed since we are just reading after init even if its from diff threads
+    private static final Map<Integer, ClientVersion> PROTOCOL_TO_CLIENT_VERSION_MAP = new HashMap<>();
     private static final ClientVersion[] VALUES = values();
-    private static final ClientVersion[] REVERSED_VALUES;
+    private static final ClientVersion[] REVERSED_VALUES = new ClientVersion[VALUES.length];
 
     static {
-        List<ClientVersion> valuesAsList = Arrays.asList(values());
-        Collections.reverse(valuesAsList);
-        REVERSED_VALUES = valuesAsList.toArray(new ClientVersion[0]);
+        for (int i = 0, j = VALUES.length - 1; i <= j; i++, j--) {
+            ClientVersion valueI = VALUES[i];
+            ClientVersion valueJ = VALUES[j];
+
+            // Populate map and reversed array in one pass
+            PROTOCOL_TO_CLIENT_VERSION_MAP.put(valueI.protocolVersion, valueI);
+            PROTOCOL_TO_CLIENT_VERSION_MAP.put(valueJ.protocolVersion, valueJ);
+
+            REVERSED_VALUES[i] = valueJ;
+            REVERSED_VALUES[j] = valueI;
+        }
     }
 
     private static final int LOWEST_SUPPORTED_PROTOCOL_VERSION = LOWER_THAN_SUPPORTED_VERSIONS.protocolVersion + 1;
@@ -133,18 +178,26 @@ public enum ClientVersion {
     private ServerVersion serverVersion;
 
     ClientVersion(int protocolVersion) {
-        this.protocolVersion = protocolVersion;
-        this.name = name().substring(2).replace("_", ".");
+        this(protocolVersion, false);
     }
 
     ClientVersion(int protocolVersion, boolean isNotRelease) {
         this.protocolVersion = protocolVersion;
         if (isNotRelease) {
-            this.name = name();
+            if (name().startsWith("V_")) {
+                this.name = name().substring(2)
+                        .replaceFirst("_", ".")
+                        .replaceFirst("_", ".")
+                        .replaceFirst("_", "-")
+                        .toLowerCase(Locale.ROOT);
+            } else {
+                this.name = name();
+            }
         } else {
             this.name = name().substring(2).replace("_", ".");
         }
     }
+
 
     public static boolean isPreRelease(int protocolVersion) {
         return getLatest().protocolVersion <= protocolVersion
@@ -196,10 +249,15 @@ public enum ClientVersion {
             }
             return UNKNOWN;
         }
+//        return PROTOCOL_TO_CLIENT_VERSION_MAP.getOrDefault(protocolVersion, ClientVersion.UNKNOWN);
     }
 
     public static ClientVersion getLatest() {
         return REVERSED_VALUES[3];
+    }
+
+    public static ClientVersion getLatestRelease() {
+        return V_1_21_5;
     }
 
     public static ClientVersion getOldest() {
@@ -232,7 +290,7 @@ public enum ClientVersion {
      * @return Is this client version newer than the compared client version.
      */
     public boolean isNewerThan(ClientVersion target) {
-        return protocolVersion > target.protocolVersion;
+        return this.ordinal() > target.ordinal();
     }
 
     /**
@@ -244,7 +302,7 @@ public enum ClientVersion {
      * @return Is this client version newer than or equal to the compared client version.
      */
     public boolean isNewerThanOrEquals(ClientVersion target) {
-        return this.protocolVersion >= target.protocolVersion;
+        return this.ordinal() >= target.ordinal();
     }
 
     /**
@@ -256,7 +314,7 @@ public enum ClientVersion {
      * @return Is this client version older than the compared client version.
      */
     public boolean isOlderThan(ClientVersion target) {
-        return protocolVersion < target.protocolVersion;
+        return this.ordinal() < target.ordinal();
     }
 
     /**
@@ -268,7 +326,7 @@ public enum ClientVersion {
      * @return Is this client version older than or equal to the compared client version.
      */
     public boolean isOlderThanOrEquals(ClientVersion target) {
-        return this.protocolVersion <= target.protocolVersion;
+        return this.ordinal() <= target.ordinal();
     }
 
     /**
@@ -287,7 +345,7 @@ public enum ClientVersion {
     public boolean is(@NotNull VersionComparison comparison, @NotNull ClientVersion targetVersion) {
         switch (comparison) {
             case EQUALS:
-                return protocolVersion == targetVersion.protocolVersion;
+                return this.ordinal() == targetVersion.ordinal();
             case NEWER_THAN:
                 return isNewerThan(targetVersion);
             case NEWER_THAN_OR_EQUALS:

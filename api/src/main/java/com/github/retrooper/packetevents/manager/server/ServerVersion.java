@@ -20,6 +20,11 @@ package com.github.retrooper.packetevents.manager.server;
 
 import com.github.retrooper.packetevents.protocol.player.ClientVersion;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 /**
  * Server Version.
@@ -50,22 +55,57 @@ public enum ServerVersion {
     //1.20 and 1.20.1 have the same protocol version. 1.20.3 and 1.20.4 have the same protocol version. 1.20.5 and 1.20.6 have the same protocol version
     V_1_20(763), V_1_20_1(763), V_1_20_2(764), V_1_20_3(765), V_1_20_4(765), V_1_20_5(766), V_1_20_6(766),
     //1.21 and 1.21.1 have the same protocol version. 1.21.2 and 1.21.3 have the same protocol version
-    V_1_21(767), V_1_21_1(767), V_1_21_2(768), V_1_21_3(768), V_1_21_4(769), V_1_21_5(770),
+    V_1_21(767), V_1_21_1(767), V_1_21_2(768), V_1_21_3(768),
+
+    // Snapshots for 1.21.4
+    V_24W44A(1073742044, true),
+    V_24W45A(1073742045, true),
+    V_24W46A(1073742046, true),
+    V_1_21_4_PRE1(1073742047, true),
+    V_1_21_4_PRE2(1073742048, true),
+    V_1_21_4_PRE3(1073742049, true),
+    V_1_21_4_RC1(1073742050, true),
+    V_1_21_4_RC2(1073742051, true),
+    V_1_21_4_RC3(1073742052, true),
+
+    V_1_21_4(769),
+
+    // Snapshots for 1.21.5 (newer than 1.21.4 but older than 1.21.5)
+    V_25W02A(1073742053, true),
+    V_25W03A(1073742054, true),
+    V_25W04A(1073742055, true),
+    V_25W05A(1073742056, true),
+    V_25W06A(1073742057, true),
+    V_25W07A(1073742058, true),
+    V_25W08A(1073742059, true),
+    V_25W09A(1073742060, true),
+    V_25W09B(1073742061, true),
+    V_25W10A(1073742062, true),
+    V_1_21_5_PRE1(1073742063, true),
+    V_1_21_5_PRE2(1073742064, true),
+    V_1_21_5_PRE3(1073742065, true),
+    V_1_21_5_RC1(1073742066, true),
+    V_1_21_5_RC2(1073742067, true),
+
+    V_1_21_5(770),
     //TODO UPDATE Add server version constant
     ERROR(-1, true);
 
+    private static final Map<Integer, ServerVersion> PROTOCOL_TO_SERVER_VERSION_MAP = new HashMap<>();
     private static final ServerVersion[] VALUES = values();
-    private static final ServerVersion[] REVERSED_VALUES;
+    private static final ServerVersion[] REVERSED_VALUES = new ServerVersion[VALUES.length];
 
     static {
-        REVERSED_VALUES = values();
-        int i = 0;
-        int j = REVERSED_VALUES.length - 1;
-        ServerVersion tmp;
-        while (j > i) {
-            tmp = REVERSED_VALUES[j];
-            REVERSED_VALUES[j--] = REVERSED_VALUES[i];
-            REVERSED_VALUES[i++] = tmp;
+        for (int i = 0, j = VALUES.length - 1; i <= j; i++, j--) {
+            ServerVersion valueI = VALUES[i];
+            ServerVersion valueJ = VALUES[j];
+
+            // Populate map and reversed array in one pass
+            PROTOCOL_TO_SERVER_VERSION_MAP.put(valueI.protocolVersion, valueI);
+            PROTOCOL_TO_SERVER_VERSION_MAP.put(valueJ.protocolVersion, valueJ);
+
+            REVERSED_VALUES[i] = valueJ;
+            REVERSED_VALUES[j] = valueI;
         }
     }
 
@@ -81,7 +121,15 @@ public enum ServerVersion {
     ServerVersion(int protocolVersion, boolean isNotRelease) {
         this.protocolVersion = protocolVersion;
         if (isNotRelease) {
-            this.name = name();
+            if (name().startsWith("V_")) {
+                this.name = name().substring(2)
+                        .replaceFirst("_", ".")
+                        .replaceFirst("_", ".")
+                        .replaceFirst("_", "-")
+                        .toLowerCase(Locale.ROOT);
+            } else {
+                this.name = name();
+            }
         } else {
             this.name = name().substring(2).replace("_", ".");
         }
@@ -99,15 +147,9 @@ public enum ServerVersion {
         return VALUES[0];
     }
 
-    //TODO Optimize
-    @Deprecated
+    @Deprecated @Nullable
     public static ServerVersion getById(int protocolVersion) {
-        for (ServerVersion version : VALUES) {
-            if (version.protocolVersion == protocolVersion) {
-                return version;
-            }
-        }
-        return null;
+        return PROTOCOL_TO_SERVER_VERSION_MAP.get(protocolVersion);
     }
 
     public ClientVersion toClientVersion() {
