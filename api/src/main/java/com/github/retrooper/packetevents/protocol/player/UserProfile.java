@@ -18,6 +18,8 @@
 
 package com.github.retrooper.packetevents.protocol.player;
 
+import ac.grim.grimac.api.packet.player.PacketUserProfile;
+
 import java.util.*;
 
 /**
@@ -26,7 +28,7 @@ import java.util.*;
  * @author retrooper
  * @since 1.7
  */
-public class UserProfile {
+public class UserProfile implements PacketUserProfile {
     private UUID uuid;
     private String name;
     private List<TextureProperty> textureProperties;

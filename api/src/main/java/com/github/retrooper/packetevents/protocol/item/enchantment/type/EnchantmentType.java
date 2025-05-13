@@ -18,6 +18,7 @@
 
 package com.github.retrooper.packetevents.protocol.item.enchantment.type;
 
+import ac.grim.grimac.api.packet.item.PacketEnchantmentType;
 import com.github.retrooper.packetevents.protocol.component.EnchantEffectComponentTypes;
 import com.github.retrooper.packetevents.protocol.component.IComponentMap;
 import com.github.retrooper.packetevents.protocol.component.StaticComponentMap;
@@ -36,7 +37,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 
-public interface EnchantmentType extends MappedEntity, CopyableEntity<EnchantmentType>, DeepComparableEntity {
+public interface EnchantmentType extends MappedEntity, CopyableEntity<EnchantmentType>, DeepComparableEntity, PacketEnchantmentType {
 
     Component getDescription();
 

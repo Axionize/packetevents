@@ -18,6 +18,8 @@
 
 package com.github.retrooper.packetevents.protocol.component.builtin.item;
 
+import ac.grim.grimac.api.packet.ResourceLocationI;
+import ac.grim.grimac.api.packet.component.PacketComponentItemUseCooldown;
 import com.github.retrooper.packetevents.protocol.item.ItemStack;
 import com.github.retrooper.packetevents.protocol.item.type.ItemType;
 import com.github.retrooper.packetevents.resources.ResourceLocation;
@@ -28,7 +30,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Objects;
 import java.util.Optional;
 
-public class ItemUseCooldown {
+public class ItemUseCooldown implements PacketComponentItemUseCooldown {
 
     private float seconds;
     private Optional<ResourceLocation> cooldownGroup;
@@ -72,8 +74,9 @@ public class ItemUseCooldown {
         this.seconds = seconds;
     }
 
-    public Optional<ResourceLocation> getCooldownGroup() {
-        return this.cooldownGroup;
+    // Will break compiling but not binary compat because of type erasure, which is fine for us
+    public Optional<ResourceLocationI> getCooldownGroup() {
+        return (Optional) this.cooldownGroup;
     }
 
     public void setCooldownGroup(Optional<ResourceLocation> cooldownGroup) {

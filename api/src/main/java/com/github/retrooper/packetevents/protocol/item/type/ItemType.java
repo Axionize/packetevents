@@ -18,6 +18,8 @@
 
 package com.github.retrooper.packetevents.protocol.item.type;
 
+import ac.grim.grimac.api.packet.item.PacketItemAttribute;
+import ac.grim.grimac.api.packet.item.PacketItemType;
 import com.github.retrooper.packetevents.PacketEvents;
 import com.github.retrooper.packetevents.protocol.component.StaticComponentMap;
 import com.github.retrooper.packetevents.protocol.item.type.ItemTypes.ItemAttribute;
@@ -28,7 +30,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Set;
 
-public interface ItemType extends MappedEntity {
+public interface ItemType extends MappedEntity, PacketItemType {
 
     int getMaxAmount();
 
@@ -48,6 +50,23 @@ public interface ItemType extends MappedEntity {
     default boolean hasAttribute(ItemAttribute attribute) {
         return this.getAttributes().contains(attribute);
     }
+
+    default boolean hasAttribute(PacketItemAttribute attribute) {
+        // translate ordinal → PE enum → EnumSet.contains()
+        return getAttributes().contains(ORDINAL_TO_PE[attribute.ordinal()]);
+    }
+
+    static ItemAttribute[] buildLookup() {
+        ItemAttribute[] map = ItemAttribute.values();
+
+        // quick safety check in case someone adds / reorders constants
+        if (map.length != PacketItemAttribute.values().length) {
+            throw new IllegalStateException(
+                    "PacketItemAttribute and ItemAttribute enum sizes differ");
+        }
+        return map;   // ordinals line up → direct reuse
+    }
+    static final ItemAttribute[] ORDINAL_TO_PE = buildLookup();
 
     @Deprecated
     default StaticComponentMap getComponents() {

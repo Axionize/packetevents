@@ -18,12 +18,22 @@
 
 package com.github.retrooper.packetevents.protocol;
 
+import ac.grim.grimac.api.packet.protocol.PacketConnectionState;
+
 /**
  * @author retrooper
  * @since 1.8
  */
 public enum ConnectionState {
-    HANDSHAKING, STATUS, LOGIN, PLAY, CONFIGURATION;
+    HANDSHAKING(PacketConnectionState.HANDSHAKE),
+    STATUS(PacketConnectionState.STATUS),
+    LOGIN(PacketConnectionState.LOGIN),
+    CONFIGURATION(PacketConnectionState.CONFIGURATION),
+    PLAY(PacketConnectionState.PLAY);
+
+    public final PacketConnectionState delegate;
+
+    ConnectionState(PacketConnectionState d) { this.delegate = d; }
 
     public static ConnectionState getById(int id) {
         if (id >= values().length || id < 0) {

@@ -18,9 +18,10 @@
 
 package com.github.retrooper.packetevents.util;
 
+import ac.grim.grimac.api.packet.component.PacketComponentDummy;
 import com.github.retrooper.packetevents.wrapper.PacketWrapper;
 
-public final class Dummy {
+public final class Dummy implements PacketComponentDummy {
 
     public static final Dummy DUMMY = new Dummy();
 

@@ -18,6 +18,7 @@
 
 package com.github.retrooper.packetevents.protocol.world.states.defaulttags;
 
+import ac.grim.grimac.api.packet.item.PacketStateType;
 import com.github.retrooper.packetevents.protocol.world.states.type.StateType;
 import com.github.retrooper.packetevents.protocol.world.states.type.StateTypes;
 import org.jetbrains.annotations.ApiStatus;
@@ -601,6 +602,10 @@ public class BlockTags {
     }
 
     public boolean contains(StateType state) {
+        return this.states.contains(state);
+    }
+
+    public boolean contains(PacketStateType state) {
         return this.states.contains(state);
     }
 

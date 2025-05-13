@@ -18,6 +18,8 @@
 
 package com.github.retrooper.packetevents.protocol.world;
 
+import ac.grim.grimac.api.data.IBlockFace;
+
 /**
  * The {@code BlockFace} enum contains constants for the different valid faces in the minecraft protocol.
  *
@@ -25,7 +27,7 @@ package com.github.retrooper.packetevents.protocol.world;
  * @see <a href="https://wiki.vg/Protocol#Player_Digging">https://wiki.vg/Protocol#Player_Digging</a>
  * @since 1.7.8
  */
-public enum BlockFace {
+public enum BlockFace implements IBlockFace {
     /**
      * -Y offset
      */

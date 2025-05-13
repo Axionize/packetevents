@@ -19,12 +19,13 @@
 package com.github.retrooper.packetevents.resources;
 
 import com.github.retrooper.packetevents.wrapper.PacketWrapper;
+import ac.grim.grimac.api.packet.ResourceLocationI;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 
-public class ResourceLocation {
+public class ResourceLocation implements ResourceLocationI {
 
     public static final String VANILLA_NAMESPACE = "minecraft";
 

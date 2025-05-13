@@ -18,6 +18,9 @@
 
 package com.github.retrooper.packetevents.protocol.player;
 
+import ac.grim.grimac.api.packet.player.PacketUser;
+import ac.grim.grimac.api.packet.protocol.PacketConnectionState;
+import ac.grim.grimac.api.packet.types.SendablePacket;
 import com.github.retrooper.packetevents.PacketEvents;
 import com.github.retrooper.packetevents.PacketEventsAPI;
 import com.github.retrooper.packetevents.event.ProtocolPacketEvent;
@@ -56,7 +59,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class User implements IRegistryHolder {
+public class User implements IRegistryHolder, PacketUser {
 
     private final Object channel;
     private ConnectionState decoderState;
@@ -137,6 +140,11 @@ public class User implements IRegistryHolder {
         return this.encoderState;
     }
 
+    public PacketConnectionState getPlayerEncoderState() {
+        return this.encoderState.delegate;
+    }
+
+
     @ApiStatus.Internal
     public void setEncoderState(ConnectionState encoderState) {
         this.encoderState = encoderState;
@@ -180,6 +188,11 @@ public class User implements IRegistryHolder {
         PacketEvents.getAPI().getProtocolManager().sendPacket(channel, wrapper);
     }
 
+    @Override
+    public void sendPacket(SendablePacket sendablePacket) {
+        sendPacket((PacketWrapper<?>) sendablePacket);
+    }
+
     public void sendPacketSilently(Object buffer) {
         PacketEvents.getAPI().getProtocolManager().sendPacketSilently(channel, buffer);
     }
@@ -194,6 +207,11 @@ public class User implements IRegistryHolder {
 
     public void writePacket(PacketWrapper<?> wrapper) {
         PacketEvents.getAPI().getProtocolManager().writePacket(channel, wrapper);
+    }
+
+    @Override
+    public void writePacket(SendablePacket sendablePacket) {
+        writePacket((PacketWrapper<?>) sendablePacket);
     }
 
     public void writePacketSilently(Object buffer) {

@@ -18,7 +18,10 @@
 
 package com.github.retrooper.packetevents.protocol.world.states.type;
 
+import ac.grim.grimac.api.packet.item.PacketStateType;
 import com.github.retrooper.packetevents.PacketEvents;
+import com.github.retrooper.packetevents.protocol.item.type.ItemType;
+import com.github.retrooper.packetevents.protocol.item.type.ItemTypes;
 import com.github.retrooper.packetevents.protocol.mapper.AbstractMappedEntity;
 import com.github.retrooper.packetevents.protocol.player.ClientVersion;
 import com.github.retrooper.packetevents.protocol.world.MaterialType;
@@ -29,7 +32,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 
-public class StateType {
+public class StateType implements PacketStateType {
 
     private final Mapped mapped;
 
@@ -145,6 +148,11 @@ public class StateType {
                 && exceedsCube == stateType.exceedsCube
                 && Objects.equals(getName(), stateType.getName())
                 && materialType == stateType.materialType;
+    }
+
+    @Override
+    public ItemType getTypePlacingState() {
+        return ItemTypes.getTypePlacingState(this);
     }
 
     @Override

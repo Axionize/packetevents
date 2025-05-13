@@ -18,6 +18,9 @@
 
 package com.github.retrooper.packetevents.protocol.component.builtin.item;
 
+import ac.grim.grimac.api.packet.component.PacketComponentItemEquippable;
+import ac.grim.grimac.api.packet.inventory.PacketEquipmentSlot;
+import com.github.retrooper.packetevents.PacketEvents;
 import com.github.retrooper.packetevents.manager.server.ServerVersion;
 import com.github.retrooper.packetevents.protocol.entity.type.EntityType;
 import com.github.retrooper.packetevents.protocol.entity.type.EntityTypes;
@@ -31,7 +34,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 
-public class ItemEquippable {
+public class ItemEquippable implements PacketComponentItemEquippable {
 
     private EquipmentSlot slot;
     private Sound equipSound;
@@ -221,5 +224,29 @@ public class ItemEquippable {
     @Override
     public String toString() {
         return "ItemEquippable{slot=" + this.slot + ", equipSound=" + this.equipSound + ", assetId=" + this.assetId + ", cameraOverlay=" + this.cameraOverlay + ", allowedEntities=" + this.allowedEntities + ", dispensable=" + this.dispensable + ", swappable=" + this.swappable + ", damageOnHurt=" + this.damageOnHurt + ", equipOnInteract=" + this.equipOnInteract + '}';
+    }
+
+    @Override
+    public PacketEquipmentSlot getPacketEquipmentSlot() {
+        switch (this.slot) {
+            case MAIN_HAND:
+                return PacketEquipmentSlot.MAIN_HAND;
+            case OFF_HAND:
+                return PacketEquipmentSlot.OFF_HAND;
+            case BOOTS:
+                return PacketEquipmentSlot.BOOTS;
+            case LEGGINGS:
+                return PacketEquipmentSlot.LEGGINGS;
+            case CHEST_PLATE:
+                return PacketEquipmentSlot.CHEST_PLATE;
+            case HELMET:
+                return PacketEquipmentSlot.HELMET;
+            case BODY:
+                return PacketEquipmentSlot.BODY;
+            case SADDLE:
+                return PacketEquipmentSlot.SADDLE;
+            default:
+                throw new IllegalStateException();
+        }
     }
 }

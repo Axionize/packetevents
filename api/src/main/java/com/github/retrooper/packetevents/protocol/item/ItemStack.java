@@ -18,6 +18,9 @@
 
 package com.github.retrooper.packetevents.protocol.item;
 
+import ac.grim.grimac.api.packet.component.PacketComponentType;
+import ac.grim.grimac.api.packet.item.PacketEnchantmentType;
+import ac.grim.grimac.api.packet.item.PacketItemStack;
 import com.github.retrooper.packetevents.PacketEvents;
 import com.github.retrooper.packetevents.protocol.component.ComponentType;
 import com.github.retrooper.packetevents.protocol.component.PatchableComponentMap;
@@ -62,7 +65,7 @@ import static com.github.retrooper.packetevents.protocol.component.ComponentType
 import static com.github.retrooper.packetevents.protocol.component.ComponentTypes.UNBREAKABLE_MODERN;
 
 @NullMarked
-public class ItemStack {
+public class ItemStack implements PacketItemStack {
 
     public static final ItemStack EMPTY = ItemStack.builder().nbt(new NBTCompound()).build();
 
@@ -703,5 +706,30 @@ public class ItemStack {
             return new ItemStack(this.type, this.amount, this.nbt, this.components,
                     this.legacyData, this.version, this.registryHolder);
         }
+    }
+
+    @Override
+    public int getEnchantmentLevel(PacketEnchantmentType packetEnchantmentType, int clientProtocolVersion) {
+        return getEnchantmentLevel((EnchantmentType) packetEnchantmentType, ClientVersion.getById(clientProtocolVersion));
+    }
+
+    @Override
+    public boolean hasComponent(PacketComponentType<?> packetComponentType) {
+        return hasComponent((ComponentType<?>) packetComponentType);
+    }
+
+    @Override
+    public <T> Optional<T> getComponent(PacketComponentType<T> packetComponentType) {
+        return getComponent((ComponentType<T>) packetComponentType);
+    }
+
+    @Override
+    public boolean isSameItemSameTags(PacketItemStack packetItemStack) {
+        return ItemStack.isSameItemSameTags(this, (ItemStack) packetItemStack);
+    }
+
+    @Override
+    public <T> T getComponentOr(PacketComponentType<T> packetComponentType, T t) {
+        return getComponentOr((ComponentType<T>) packetComponentType, t);
     }
 }

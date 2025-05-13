@@ -18,6 +18,7 @@
 
 package com.github.retrooper.packetevents.protocol.component;
 
+import ac.grim.grimac.api.packet.component.PacketComponentType;
 import com.github.retrooper.packetevents.protocol.mapper.MappedEntity;
 import com.github.retrooper.packetevents.protocol.nbt.NBT;
 import com.github.retrooper.packetevents.protocol.player.ClientVersion;
@@ -26,7 +27,7 @@ import org.jetbrains.annotations.ApiStatus;
 
 import java.util.function.Function;
 
-public interface ComponentType<T> extends MappedEntity {
+public interface ComponentType<T> extends MappedEntity, PacketComponentType<T> {
 
     T read(PacketWrapper<?> wrapper);
 

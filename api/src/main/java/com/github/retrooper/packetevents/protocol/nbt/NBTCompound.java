@@ -18,6 +18,7 @@
 
 package com.github.retrooper.packetevents.protocol.nbt;
 
+import ac.grim.grimac.api.packet.nbt.PacketNBTCompound;
 import org.jetbrains.annotations.Nullable;
 
 import java.text.MessageFormat;
@@ -26,7 +27,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Set;
 
-public class NBTCompound extends NBT {
+public class NBTCompound extends NBT implements PacketNBTCompound {
 
     protected final Map<String, NBT> tags = new LinkedHashMap<>();
 

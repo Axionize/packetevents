@@ -18,12 +18,13 @@
 
 package com.github.retrooper.packetevents.protocol.entity.type;
 
+import ac.grim.grimac.api.packet.entity.PacketEntityType;
 import com.github.retrooper.packetevents.protocol.mapper.LegacyMappedEntity;
 import com.github.retrooper.packetevents.protocol.mapper.MappedEntity;
 
 import java.util.Optional;
 
-public interface EntityType extends MappedEntity, LegacyMappedEntity {
+public interface EntityType extends MappedEntity, LegacyMappedEntity, PacketEntityType {
 
     boolean isInstanceOf(EntityType parent);
 

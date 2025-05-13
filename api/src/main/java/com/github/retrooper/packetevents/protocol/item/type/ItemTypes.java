@@ -18,6 +18,7 @@
 
 package com.github.retrooper.packetevents.protocol.item.type;
 
+import ac.grim.grimac.api.packet.item.PacketItemAttribute;
 import com.github.retrooper.packetevents.PacketEvents;
 import com.github.retrooper.packetevents.netty.buffer.ByteBufHelper;
 import com.github.retrooper.packetevents.netty.buffer.UnpooledByteBufAllocationHelper;

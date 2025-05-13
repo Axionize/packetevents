@@ -18,6 +18,7 @@
 
 package com.github.retrooper.packetevents.protocol.world.states.defaulttags;
 
+import ac.grim.grimac.api.packet.item.PacketItemType;
 import com.github.retrooper.packetevents.protocol.component.ComponentTypes;
 import com.github.retrooper.packetevents.protocol.item.type.ItemType;
 import com.github.retrooper.packetevents.protocol.item.type.ItemTypes;
@@ -714,6 +715,10 @@ public class ItemTags {
     }
 
     public boolean contains(ItemType state) {
+        return this.states.contains(state);
+    }
+
+    public boolean contains(PacketItemType state) {
         return this.states.contains(state);
     }
 

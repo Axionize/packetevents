@@ -42,6 +42,7 @@
  */
 package com.github.retrooper.packetevents.wrapper;
 
+import ac.grim.grimac.api.packet.types.SendablePacket;
 import com.github.retrooper.packetevents.PacketEvents;
 import com.github.retrooper.packetevents.event.PacketReceiveEvent;
 import com.github.retrooper.packetevents.event.PacketSendEvent;
@@ -127,7 +128,7 @@ import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.function.IntFunction;
 
-public class PacketWrapper<T extends PacketWrapper<T>> {
+public class PacketWrapper<T extends PacketWrapper<T>> implements SendablePacket {
     @Nullable
     public Object buffer;
 
