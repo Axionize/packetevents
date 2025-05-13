@@ -13,6 +13,7 @@ plugins {
 // papermc repo + disableAutoTargetJvm needed for mockbukkit
 repositories {
     maven("https://repo.papermc.io/repository/maven-public/")
+    mavenLocal()
 }
 
 java {
@@ -29,6 +30,7 @@ dependencies {
     api(libs.adventure.text.serializer.legacy) {
         excludeAdventure()
     }
+    compileOnly(libs.grimapi)
     compileOnly(libs.gson)
 
     testImplementation(libs.bundles.adventure)
@@ -43,6 +45,7 @@ dependencies {
     testImplementation(project(":spigot"))
     testImplementation("org.junit.jupiter:junit-jupiter-api:5.11.2")
     testImplementation("org.junit.jupiter:junit-jupiter-params:5.11.2")
+    testImplementation(libs.grimapi)
 }
 
 mappingCompression {

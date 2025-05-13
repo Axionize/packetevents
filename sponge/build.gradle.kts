@@ -10,6 +10,7 @@ plugins {
 repositories {
     maven("https://repo.spongepowered.org/repository/maven-public/") // Sponge
     maven("https://repo.viaversion.com/")
+    mavenLocal()
 }
 
 sponge {
@@ -45,4 +46,5 @@ dependencies {
     compileShadowOnly(libs.bstats.sponge)
 
     compileOnly(libs.via.version)
+    compileOnly(libs.grimapi)
 }

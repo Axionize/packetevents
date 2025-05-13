@@ -71,4 +71,12 @@ allprojects {
             archiveVersion = rootProject.ext["versionNoHash"] as String
         }
     }
+
+    repositories {
+        maven("https://repo.grim.ac/snapshots") { // Grim API
+            content {
+                includeGroup("ac.grim.grimac")
+            }
+        }
+    }
 }

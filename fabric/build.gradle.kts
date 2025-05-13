@@ -45,10 +45,13 @@ allprojects {
 
     repositories {
         maven("https://repo.codemc.io/repository/maven-snapshots/")
+        mavenLocal()
     }
 
     dependencies {
         modImplementation("net.fabricmc:fabric-loader:$loader_version")
+        val libsx = rootProject.extensions.getByType<VersionCatalogsExtension>().named("libs")
+        compileOnly(libsx.findLibrary("grimapi").get())
     }
 
     tasks {

@@ -8,6 +8,7 @@ repositories {
     maven("https://jitpack.io")
     maven("https://repo.viaversion.com/")
     maven("https://repo.papermc.io/repository/maven-public/")
+    mavenLocal()
 }
 
 dependencies {
@@ -20,6 +21,7 @@ dependencies {
     compileOnly(libs.paper)
     compileOnly(libs.via.version)
     compileOnly(libs.protocol.support)
+    compileOnly(libs.grimapi)
 }
 
 tasks {

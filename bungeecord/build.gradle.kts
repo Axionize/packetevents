@@ -5,6 +5,7 @@ plugins {
 
 repositories {
     maven("https://repo.papermc.io/repository/maven-public/")
+    mavenLocal()
 }
 
 dependencies {
@@ -13,4 +14,5 @@ dependencies {
     compileShadowOnly(libs.bstats.bungeecord)
     shadow(project(":api", "shadow"))
     shadow(project(":netty-common"))
+    compileOnly(libs.grimapi)
 }
