@@ -18,7 +18,9 @@
 
 package com.github.retrooper.packetevents.protocol.world.states.type;
 
+import ac.grim.grimac.api.packet.block.PacketBlockState;
 import ac.grim.grimac.api.packet.item.PacketStateType;
+import ac.grim.grimac.api.packet.protocol.PacketClientVersion;
 import com.github.retrooper.packetevents.PacketEvents;
 import com.github.retrooper.packetevents.protocol.item.type.ItemType;
 import com.github.retrooper.packetevents.protocol.item.type.ItemTypes;
@@ -120,7 +122,6 @@ public class StateType implements PacketStateType {
                 return false;
         }
     }
-
     public boolean exceedsCube() {
         return exceedsCube;
     }
@@ -170,5 +171,10 @@ public class StateType implements PacketStateType {
         public StateType getStateType() {
             return StateType.this;
         }
+    }
+
+    @Override
+    public PacketBlockState createBlockState(PacketClientVersion blockVersion) {
+        return this.createBlockState((ClientVersion) blockVersion);
     }
 }

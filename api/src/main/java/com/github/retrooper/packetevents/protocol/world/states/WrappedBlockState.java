@@ -1,5 +1,6 @@
 package com.github.retrooper.packetevents.protocol.world.states;
 
+import ac.grim.grimac.api.packet.block.PacketBlockState;
 import com.github.retrooper.packetevents.PacketEvents;
 import com.github.retrooper.packetevents.protocol.nbt.NBT;
 import com.github.retrooper.packetevents.protocol.nbt.NBTByte;
@@ -64,7 +65,7 @@ import static com.github.retrooper.packetevents.util.adventure.AdventureIndexUti
  * <p>
  * Mappings from modern versions are from ViaVersion, who have a similar (but a bit slower) system.
  */
-public class WrappedBlockState {
+public class WrappedBlockState implements PacketBlockState {
 
     // all versions where block state mappings were changed TODO UPDATE
     private static final ClientVersion[] MAPPING_VERSION_STEPS = new ClientVersion[]{
@@ -1626,5 +1627,151 @@ public class WrappedBlockState {
             }
             return this.string;
         }
+    }
+
+
+    @Override
+    public ac.grim.grimac.api.packet.world.enums.North north() {
+        return getNorth().north;
+    }
+
+    @Override
+    public void setNorth(ac.grim.grimac.api.packet.world.enums.North north) {
+        setNorth(North.of(north));
+    }
+
+    @Override
+    public ac.grim.grimac.api.packet.world.enums.East east() {
+        return getEast().east;
+    }
+
+    @Override
+    public void setEast(ac.grim.grimac.api.packet.world.enums.East east) {
+        setEast(East.of(east));
+    }
+
+    @Override
+    public ac.grim.grimac.api.packet.world.enums.South south() {
+        return getSouth().south;
+    }
+
+    @Override
+    public void setSouth(ac.grim.grimac.api.packet.world.enums.South south) {
+        setSouth(South.of(south));
+    }
+
+    @Override
+    public ac.grim.grimac.api.packet.world.enums.West west() {
+        return getWest().west;
+    }
+
+    @Override
+    public void setWest(ac.grim.grimac.api.packet.world.enums.West west) {
+        setWest(West.of(west));
+    }
+
+    @Override
+    public ac.grim.grimac.api.packet.world.enums.BlockFace facing() {
+        return getFacing().blockFace;
+    }
+
+    @Override
+    public void setFacing(ac.grim.grimac.api.packet.world.enums.BlockFace face) {
+        setFacing(BlockFace.of(face));
+    }
+
+    @Override
+    public ac.grim.grimac.api.packet.world.enums.Axis axis() {
+        return getAxis().axis;
+    }
+
+    @Override
+    public void setAxis(ac.grim.grimac.api.packet.world.enums.Axis axis) {
+        setAxis(Axis.of(axis));
+    }
+
+    @Override
+    public ac.grim.grimac.api.packet.world.enums.VerticalDirection verticalDirection() {
+        return getVerticalDirection().verticalDirection;
+    }
+
+    @Override
+    public void setVerticalDirection(ac.grim.grimac.api.packet.world.enums.VerticalDirection direction) {
+        setVerticalDirection(VerticalDirection.of(direction));
+    }
+
+    @Override
+    public ac.grim.grimac.api.packet.world.enums.Half half() {
+        return getHalf().half;
+    }
+
+    @Override
+    public void setHalf(ac.grim.grimac.api.packet.world.enums.Half half) {
+        setHalf(Half.of(half));
+    }
+
+    @Override
+    public ac.grim.grimac.api.packet.world.enums.Face face() {
+        return getFace().face;
+    }
+
+    @Override
+    public void setFace(ac.grim.grimac.api.packet.world.enums.Face face) {
+        setFace(Face.of(face));
+    }
+
+    @Override
+    public ac.grim.grimac.api.packet.world.enums.Hinge hinge() {
+        return getHinge().hinge;
+    }
+
+    @Override
+    public void setHinge(ac.grim.grimac.api.packet.world.enums.Hinge hinge) {
+        setHinge(Hinge.of(hinge));
+    }
+
+    @Override
+    public ac.grim.grimac.api.packet.world.enums.Attachment attachment() {
+        return getAttachment().attachment;
+    }
+
+    @Override
+    public void setAttachment(ac.grim.grimac.api.packet.world.enums.Attachment attachment) {
+        setAttachment(Attachment.of(attachment));
+    }
+
+    @Override
+    public ac.grim.grimac.api.packet.world.enums.Shape shape() {
+        return getShape().shape;
+    }
+
+    @Override
+    public ac.grim.grimac.api.packet.world.enums.Tilt tilt() {
+        return getTilt().tilt;
+    }
+
+    @Override
+    public ac.grim.grimac.api.packet.world.enums.Thickness thickness() {
+        return getThickness().thickness;
+    }
+
+    @Override
+    public void setThickness(ac.grim.grimac.api.packet.world.enums.Thickness thickness) {
+        setThickness(Thickness.of(thickness));
+    }
+
+    @Override
+    public ac.grim.grimac.api.packet.world.enums.Type typeData() {
+        return getTypeData().type;
+    }
+
+    @Override
+    public void setTypeData(ac.grim.grimac.api.packet.world.enums.Type type) {
+        setTypeData(Type.of(type));
+    }
+
+    @Override
+    public ac.grim.grimac.api.packet.world.enums.Leaves leaves() {
+        return getLeaves().leaves;
     }
 }

@@ -19,8 +19,20 @@
 package com.github.retrooper.packetevents.protocol.world.states.enums;
 
 public enum Half {
-    BOTTOM,
-    LOWER,
-    TOP,
-    UPPER
+    BOTTOM(ac.grim.grimac.api.packet.world.enums.Half.BOTTOM),
+    LOWER(ac.grim.grimac.api.packet.world.enums.Half.LOWER),
+    TOP(ac.grim.grimac.api.packet.world.enums.Half.TOP),
+    UPPER(ac.grim.grimac.api.packet.world.enums.Half.UPPER);
+
+    public final ac.grim.grimac.api.packet.world.enums.Half half;
+
+    Half(ac.grim.grimac.api.packet.world.enums.Half half) {
+        this.half = half;
+    }
+
+    private static final Half[] API_MAP = values();
+
+    public static Half of(ac.grim.grimac.api.packet.world.enums.Half api) {
+        return API_MAP[api.ordinal()];
+    }
 }

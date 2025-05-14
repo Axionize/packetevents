@@ -18,6 +18,9 @@
 
 package com.github.retrooper.packetevents.protocol.world.chunk;
 
+import ac.grim.grimac.api.packet.block.PacketBlockState;
+import ac.grim.grimac.api.packet.protocol.PacketClientVersion;
+import ac.grim.grimac.api.packet.world.chunk.PacketChunk;
 import com.github.retrooper.packetevents.PacketEvents;
 import com.github.retrooper.packetevents.manager.server.ServerVersion;
 import com.github.retrooper.packetevents.protocol.player.ClientVersion;
@@ -31,7 +34,7 @@ import com.github.retrooper.packetevents.protocol.world.chunk.palette.PaletteTyp
 import com.github.retrooper.packetevents.protocol.world.chunk.storage.LegacyFlexibleStorage;
 import com.github.retrooper.packetevents.protocol.world.states.WrappedBlockState;
 
-public interface BaseChunk {
+public interface BaseChunk extends PacketChunk {
     int getBlockId(int x, int y, int z);
 
     default WrappedBlockState get(ClientVersion version, int x, int y, int z) {
@@ -75,5 +78,9 @@ public interface BaseChunk {
             return new Chunk_v1_8(new ShortArray3d(4096), null, null);
         }
         return new Chunk_v1_7(false, true);
+    }
+
+    default PacketBlockState get(PacketClientVersion blockVersion, int x, int y, int z, boolean clone) {
+        return get((ClientVersion) blockVersion, x, y, z, clone);
     }
 }

@@ -19,9 +19,21 @@
 package com.github.retrooper.packetevents.protocol.world.states.enums;
 
 public enum Thickness {
-    BASE,
-    FRUSTUM,
-    MIDDLE,
-    TIP,
-    TIP_MERGE
+    BASE(ac.grim.grimac.api.packet.world.enums.Thickness.BASE),
+    FRUSTUM(ac.grim.grimac.api.packet.world.enums.Thickness.FRUSTUM),
+    MIDDLE(ac.grim.grimac.api.packet.world.enums.Thickness.MIDDLE),
+    TIP(ac.grim.grimac.api.packet.world.enums.Thickness.TIP),
+    TIP_MERGE(ac.grim.grimac.api.packet.world.enums.Thickness.TIP_MERGE);
+
+    public final ac.grim.grimac.api.packet.world.enums.Thickness thickness;
+
+    Thickness(ac.grim.grimac.api.packet.world.enums.Thickness thickness) {
+        this.thickness = thickness;
+    }
+
+    private static final Thickness[] API_MAP = values();
+
+    public static Thickness of(ac.grim.grimac.api.packet.world.enums.Thickness api) {
+        return API_MAP[api.ordinal()];
+    }
 }

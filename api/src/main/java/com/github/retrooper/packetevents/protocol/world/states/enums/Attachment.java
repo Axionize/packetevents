@@ -19,8 +19,20 @@
 package com.github.retrooper.packetevents.protocol.world.states.enums;
 
 public enum Attachment {
-    CEILING,
-    DOUBLE_WALL,
-    FLOOR,
-    SINGLE_WALL
+    CEILING(ac.grim.grimac.api.packet.world.enums.Attachment.CEILING),
+    DOUBLE_WALL(ac.grim.grimac.api.packet.world.enums.Attachment.DOUBLE_WALL),
+    FLOOR(ac.grim.grimac.api.packet.world.enums.Attachment.FLOOR),
+    SINGLE_WALL(ac.grim.grimac.api.packet.world.enums.Attachment.SINGLE_WALL);
+
+    public final ac.grim.grimac.api.packet.world.enums.Attachment attachment;
+
+    Attachment(ac.grim.grimac.api.packet.world.enums.Attachment attachment) {
+        this.attachment = attachment;
+    }
+
+    private static final Attachment[] API_MAP = values();
+
+    public static Attachment of(ac.grim.grimac.api.packet.world.enums.Attachment api) {
+        return API_MAP[api.ordinal()];
+    }
 }

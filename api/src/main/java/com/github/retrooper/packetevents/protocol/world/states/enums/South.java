@@ -19,11 +19,23 @@
 package com.github.retrooper.packetevents.protocol.world.states.enums;
 
 public enum South {
-    FALSE,
-    LOW,
-    NONE,
-    SIDE,
-    TALL,
-    TRUE,
-    UP
+    FALSE(ac.grim.grimac.api.packet.world.enums.South.FALSE),
+    LOW(ac.grim.grimac.api.packet.world.enums.South.LOW),
+    NONE(ac.grim.grimac.api.packet.world.enums.South.NONE),
+    SIDE(ac.grim.grimac.api.packet.world.enums.South.SIDE),
+    TALL(ac.grim.grimac.api.packet.world.enums.South.TALL),
+    TRUE(ac.grim.grimac.api.packet.world.enums.South.TRUE),
+    UP(ac.grim.grimac.api.packet.world.enums.South.UP);
+
+    public final ac.grim.grimac.api.packet.world.enums.South south;
+
+    South(ac.grim.grimac.api.packet.world.enums.South south) {
+        this.south = south;
+    }
+
+    private static final South[] API_MAP = values();
+
+    public static South of(ac.grim.grimac.api.packet.world.enums.South api) {
+        return API_MAP[api.ordinal()];
+    }
 }

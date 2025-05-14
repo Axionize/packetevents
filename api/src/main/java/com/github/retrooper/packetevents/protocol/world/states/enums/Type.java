@@ -19,12 +19,24 @@
 package com.github.retrooper.packetevents.protocol.world.states.enums;
 
 public enum Type {
-    BOTTOM,
-    DOUBLE,
-    LEFT,
-    NORMAL,
-    RIGHT,
-    SINGLE,
-    STICKY,
-    TOP
+    BOTTOM(ac.grim.grimac.api.packet.world.enums.Type.BOTTOM),
+    DOUBLE(ac.grim.grimac.api.packet.world.enums.Type.DOUBLE),
+    LEFT(ac.grim.grimac.api.packet.world.enums.Type.LEFT),
+    NORMAL(ac.grim.grimac.api.packet.world.enums.Type.NORMAL),
+    RIGHT(ac.grim.grimac.api.packet.world.enums.Type.RIGHT),
+    SINGLE(ac.grim.grimac.api.packet.world.enums.Type.SINGLE),
+    STICKY(ac.grim.grimac.api.packet.world.enums.Type.STICKY),
+    TOP(ac.grim.grimac.api.packet.world.enums.Type.TOP);
+
+    public final ac.grim.grimac.api.packet.world.enums.Type type;
+
+    Type(ac.grim.grimac.api.packet.world.enums.Type type) {
+        this.type = type;
+    }
+
+    private static final Type[] API_MAP = values();
+
+    public static Type of(ac.grim.grimac.api.packet.world.enums.Type api) {
+        return API_MAP[api.ordinal()];
+    }
 }

@@ -19,8 +19,20 @@
 package com.github.retrooper.packetevents.protocol.world.states.enums;
 
 public enum Tilt {
-    FULL,
-    NONE,
-    PARTIAL,
-    UNSTABLE
+    FULL(ac.grim.grimac.api.packet.world.enums.Tilt.FULL),
+    NONE(ac.grim.grimac.api.packet.world.enums.Tilt.NONE),
+    PARTIAL(ac.grim.grimac.api.packet.world.enums.Tilt.PARTIAL),
+    UNSTABLE(ac.grim.grimac.api.packet.world.enums.Tilt.UNSTABLE);
+
+    public final ac.grim.grimac.api.packet.world.enums.Tilt tilt;
+
+    Tilt(ac.grim.grimac.api.packet.world.enums.Tilt tilt) {
+        this.tilt = tilt;
+    }
+
+    private static final Tilt[] API_MAP = values();
+
+    public static Tilt of(ac.grim.grimac.api.packet.world.enums.Tilt api) {
+        return API_MAP[api.ordinal()];
+    }
 }

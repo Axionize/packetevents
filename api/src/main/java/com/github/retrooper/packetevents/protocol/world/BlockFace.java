@@ -18,7 +18,7 @@
 
 package com.github.retrooper.packetevents.protocol.world;
 
-import ac.grim.grimac.api.data.IBlockFace;
+import com.github.retrooper.packetevents.protocol.world.states.enums.West;
 
 /**
  * The {@code BlockFace} enum contains constants for the different valid faces in the minecraft protocol.
@@ -27,58 +27,62 @@ import ac.grim.grimac.api.data.IBlockFace;
  * @see <a href="https://wiki.vg/Protocol#Player_Digging">https://wiki.vg/Protocol#Player_Digging</a>
  * @since 1.7.8
  */
-public enum BlockFace implements IBlockFace {
+public enum BlockFace {
     /**
      * -Y offset
      */
-    DOWN(0, -1, 0),
+    DOWN(ac.grim.grimac.api.packet.world.enums.BlockFace.DOWN, 0, -1, 0),
 
     /**
      * +Y offset
      */
-    UP(0, 1, 0),
+    UP(ac.grim.grimac.api.packet.world.enums.BlockFace.UP, 0, 1, 0),
 
     /**
      * -Z offset
      */
-    NORTH(0, 0, -1),
+    NORTH(ac.grim.grimac.api.packet.world.enums.BlockFace.NORTH, 0, 0, -1),
 
     /**
      * +Z offset
      */
-    SOUTH(0, 0, 1),
+    SOUTH(ac.grim.grimac.api.packet.world.enums.BlockFace.SOUTH, 0, 0, 1),
 
     /**
      * -X offset
      */
-    WEST(-1, 0, 0),
+    WEST(ac.grim.grimac.api.packet.world.enums.BlockFace.WEST, -1, 0, 0),
 
     /**
      * +X offset
      */
-    EAST(1, 0, 0),
+    EAST(ac.grim.grimac.api.packet.world.enums.BlockFace.EAST, 1, 0, 0),
 
     /**
      * Face is set to 255
      */
-    OTHER((short) 255, -1, -1, -1);
+    OTHER(ac.grim.grimac.api.packet.world.enums.BlockFace.OTHER, (short) 255, -1, -1, -1);
 
     private static final BlockFace[] VALUES = values();
     private static final BlockFace[] CARTESIAN_VALUES = new BlockFace[]{DOWN, UP, NORTH, SOUTH, WEST, EAST}; // FIXME: remove this or use this somewhere
+
+    public final ac.grim.grimac.api.packet.world.enums.BlockFace blockFace;
 
     final short faceValue;
     final int modX;
     final int modY;
     final int modZ;
 
-    BlockFace(short faceValue, int modX, int modY, int modZ) {
+    BlockFace(ac.grim.grimac.api.packet.world.enums.BlockFace blockFace, short faceValue, int modX, int modY, int modZ) {
+        this.blockFace = blockFace;
         this.faceValue = faceValue;
         this.modX = modX;
         this.modY = modY;
         this.modZ = modZ;
     }
 
-    BlockFace(int modX, int modY, int modZ) {
+    BlockFace(ac.grim.grimac.api.packet.world.enums.BlockFace blockFace, int modX, int modY, int modZ) {
+        this.blockFace = blockFace;
         this.faceValue = (short) ordinal();
         this.modX = modX;
         this.modY = modY;
@@ -186,4 +190,9 @@ public enum BlockFace implements IBlockFace {
         return faceValue;
     }
 
+    private static final BlockFace[] API_MAP = values();
+
+    public static BlockFace of(ac.grim.grimac.api.packet.world.enums.BlockFace api) {
+        return API_MAP[api.ordinal()];
+    }
 }

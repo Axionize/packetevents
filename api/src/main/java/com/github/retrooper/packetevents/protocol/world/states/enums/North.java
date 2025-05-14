@@ -19,11 +19,23 @@
 package com.github.retrooper.packetevents.protocol.world.states.enums;
 
 public enum North {
-    FALSE,
-    LOW,
-    NONE,
-    SIDE,
-    TALL,
-    TRUE,
-    UP
+    FALSE(ac.grim.grimac.api.packet.world.enums.North.FALSE),
+    LOW(ac.grim.grimac.api.packet.world.enums.North.LOW),
+    NONE(ac.grim.grimac.api.packet.world.enums.North.NONE),
+    SIDE(ac.grim.grimac.api.packet.world.enums.North.SIDE),
+    TALL(ac.grim.grimac.api.packet.world.enums.North.TALL),
+    TRUE(ac.grim.grimac.api.packet.world.enums.North.TRUE),
+    UP(ac.grim.grimac.api.packet.world.enums.North.UP);
+
+    public final ac.grim.grimac.api.packet.world.enums.North north;
+
+    North(ac.grim.grimac.api.packet.world.enums.North north) {
+        this.north = north;
+    }
+
+    private static final North[] API_MAP = values();
+
+    public static North of(ac.grim.grimac.api.packet.world.enums.North api) {
+        return API_MAP[api.ordinal()];
+    }
 }

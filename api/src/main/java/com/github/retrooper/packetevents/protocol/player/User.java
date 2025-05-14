@@ -19,6 +19,7 @@
 package com.github.retrooper.packetevents.protocol.player;
 
 import ac.grim.grimac.api.packet.player.PacketUser;
+import ac.grim.grimac.api.packet.protocol.PacketClientVersion;
 import ac.grim.grimac.api.packet.protocol.PacketConnectionState;
 import ac.grim.grimac.api.packet.types.SendablePacket;
 import com.github.retrooper.packetevents.PacketEvents;
@@ -144,6 +145,15 @@ public class User implements IRegistryHolder, PacketUser {
         return this.encoderState.delegate;
     }
 
+    @Override
+    public PacketConnectionState getPlayerDecoderState() {
+        return this.decoderState.delegate;
+    }
+
+    @Override
+    public ClientVersion getPlayerClientVersion() {
+        return this.clientVersion;
+    }
 
     @ApiStatus.Internal
     public void setEncoderState(ConnectionState encoderState) {

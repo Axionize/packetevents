@@ -19,6 +19,18 @@
 package com.github.retrooper.packetevents.protocol.world.states.enums;
 
 public enum Hinge {
-    LEFT,
-    RIGHT
+    LEFT(ac.grim.grimac.api.packet.world.enums.Hinge.LEFT),
+    RIGHT(ac.grim.grimac.api.packet.world.enums.Hinge.RIGHT);
+
+    public final ac.grim.grimac.api.packet.world.enums.Hinge hinge;
+
+    Hinge(ac.grim.grimac.api.packet.world.enums.Hinge hinge) {
+        this.hinge = hinge;
+    }
+
+    private static final Hinge[] API_MAP = values();
+
+    public static Hinge of(ac.grim.grimac.api.packet.world.enums.Hinge api) {
+        return API_MAP[api.ordinal()];
+    }
 }

@@ -19,6 +19,18 @@
 package com.github.retrooper.packetevents.protocol.world.states.enums;
 
 public enum VerticalDirection {
-    DOWN,
-    UP
+    DOWN(ac.grim.grimac.api.packet.world.enums.VerticalDirection.DOWN),
+    UP(ac.grim.grimac.api.packet.world.enums.VerticalDirection.UP);
+
+    public final ac.grim.grimac.api.packet.world.enums.VerticalDirection verticalDirection;
+
+    VerticalDirection(ac.grim.grimac.api.packet.world.enums.VerticalDirection verticalDirection) {
+        this.verticalDirection = verticalDirection;
+    }
+
+    private static final VerticalDirection[] API_MAP = values();
+
+    public static VerticalDirection of(ac.grim.grimac.api.packet.world.enums.VerticalDirection api) {
+        return API_MAP[api.ordinal()];
+    }
 }

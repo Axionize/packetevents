@@ -19,19 +19,31 @@
 package com.github.retrooper.packetevents.protocol.world.states.enums;
 
 public enum Shape {
-    ASCENDING_EAST,
-    ASCENDING_NORTH,
-    ASCENDING_SOUTH,
-    ASCENDING_WEST,
-    EAST_WEST,
-    INNER_LEFT,
-    INNER_RIGHT,
-    NORTH_EAST,
-    NORTH_SOUTH,
-    NORTH_WEST,
-    OUTER_LEFT,
-    OUTER_RIGHT,
-    SOUTH_EAST,
-    SOUTH_WEST,
-    STRAIGHT
+    ASCENDING_EAST(ac.grim.grimac.api.packet.world.enums.Shape.ASCENDING_EAST),
+    ASCENDING_NORTH(ac.grim.grimac.api.packet.world.enums.Shape.ASCENDING_NORTH),
+    ASCENDING_SOUTH(ac.grim.grimac.api.packet.world.enums.Shape.ASCENDING_SOUTH),
+    ASCENDING_WEST(ac.grim.grimac.api.packet.world.enums.Shape.ASCENDING_WEST),
+    EAST_WEST(ac.grim.grimac.api.packet.world.enums.Shape.EAST_WEST),
+    INNER_LEFT(ac.grim.grimac.api.packet.world.enums.Shape.INNER_LEFT),
+    INNER_RIGHT(ac.grim.grimac.api.packet.world.enums.Shape.INNER_RIGHT),
+    NORTH_EAST(ac.grim.grimac.api.packet.world.enums.Shape.NORTH_EAST),
+    NORTH_SOUTH(ac.grim.grimac.api.packet.world.enums.Shape.NORTH_SOUTH),
+    NORTH_WEST(ac.grim.grimac.api.packet.world.enums.Shape.NORTH_WEST),
+    OUTER_LEFT(ac.grim.grimac.api.packet.world.enums.Shape.OUTER_LEFT),
+    OUTER_RIGHT(ac.grim.grimac.api.packet.world.enums.Shape.OUTER_RIGHT),
+    SOUTH_EAST(ac.grim.grimac.api.packet.world.enums.Shape.SOUTH_EAST),
+    SOUTH_WEST(ac.grim.grimac.api.packet.world.enums.Shape.SOUTH_WEST),
+    STRAIGHT(ac.grim.grimac.api.packet.world.enums.Shape.STRAIGHT);
+
+    public final ac.grim.grimac.api.packet.world.enums.Shape shape;
+
+    Shape(ac.grim.grimac.api.packet.world.enums.Shape shape) {
+        this.shape = shape;
+    }
+
+    private static final Shape[] API_MAP = values();
+
+    public static Shape of(ac.grim.grimac.api.packet.world.enums.Shape api) {
+        return API_MAP[api.ordinal()];
+    }
 }

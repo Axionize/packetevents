@@ -19,7 +19,19 @@
 package com.github.retrooper.packetevents.protocol.world.states.enums;
 
 public enum Axis {
-    X,
-    Y,
-    Z
+    X(ac.grim.grimac.api.packet.world.enums.Axis.X),
+    Y(ac.grim.grimac.api.packet.world.enums.Axis.Y),
+    Z(ac.grim.grimac.api.packet.world.enums.Axis.Z);
+
+    public final ac.grim.grimac.api.packet.world.enums.Axis axis;
+
+    Axis(ac.grim.grimac.api.packet.world.enums.Axis axis) {
+        this.axis = axis;
+    }
+
+    private static final Axis[] API_MAP = values();
+
+    public static Axis of(ac.grim.grimac.api.packet.world.enums.Axis api) {
+        return API_MAP[api.ordinal()];
+    }
 }

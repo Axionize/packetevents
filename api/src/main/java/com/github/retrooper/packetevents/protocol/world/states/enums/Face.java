@@ -19,7 +19,19 @@
 package com.github.retrooper.packetevents.protocol.world.states.enums;
 
 public enum Face {
-    CEILING,
-    FLOOR,
-    WALL
+    CEILING(ac.grim.grimac.api.packet.world.enums.Face.CEILING),
+    FLOOR(ac.grim.grimac.api.packet.world.enums.Face.FLOOR),
+    WALL(ac.grim.grimac.api.packet.world.enums.Face.WALL);
+
+    public final ac.grim.grimac.api.packet.world.enums.Face face;
+
+    Face(ac.grim.grimac.api.packet.world.enums.Face face) {
+        this.face = face;
+    }
+
+    private static final Face[] API_MAP = values();
+
+    public static Face of(ac.grim.grimac.api.packet.world.enums.Face api) {
+        return API_MAP[api.ordinal()];
+    }
 }

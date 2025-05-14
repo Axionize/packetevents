@@ -18,6 +18,7 @@
 
 package com.github.retrooper.packetevents.protocol.player;
 
+import ac.grim.grimac.api.packet.protocol.PacketClientVersion;
 import com.github.retrooper.packetevents.manager.server.ServerVersion;
 import com.github.retrooper.packetevents.manager.server.VersionComparison;
 import org.jetbrains.annotations.NotNull;
@@ -38,7 +39,7 @@ import java.util.List;
  * @see <a href="https://wiki.vg/Protocol_version_numbers">https://wiki.vg/Protocol_version_numbers</a>
  * @since 1.6.9
  */
-public enum ClientVersion {
+public enum ClientVersion implements PacketClientVersion {
     V_1_7_10(5),
 
     V_1_8(47),
@@ -299,5 +300,24 @@ public enum ClientVersion {
             default:
                 return false;
         }
+    }
+
+    @Override
+    public boolean isOlderThan(PacketClientVersion packetClientVersion) {
+        return this.isOlderThan((ClientVersion) packetClientVersion);
+    }
+
+    @Override
+    public boolean isNewerThanOrEquals(PacketClientVersion packetClientVersion) {
+        return this.isNewerThanOrEquals((ClientVersion) packetClientVersion);
+    }
+
+    @Override public boolean isOlderThanOrEquals(PacketClientVersion packetClientVersion) {
+        return this.isOlderThanOrEquals((ClientVersion) packetClientVersion);
+    }
+
+    @Override
+    public boolean isNewerThan(PacketClientVersion packetClientVersion) {
+        return this.isNewerThan((ClientVersion) packetClientVersion);
     }
 }

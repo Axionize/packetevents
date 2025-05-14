@@ -19,7 +19,19 @@
 package com.github.retrooper.packetevents.protocol.world.states.enums;
 
 public enum Leaves {
-    LARGE,
-    NONE,
-    SMALL
+    LARGE(ac.grim.grimac.api.packet.world.enums.Leaves.LARGE),
+    NONE(ac.grim.grimac.api.packet.world.enums.Leaves.NONE),
+    SMALL(ac.grim.grimac.api.packet.world.enums.Leaves.SMALL);
+
+    public final ac.grim.grimac.api.packet.world.enums.Leaves leaves;
+
+    Leaves(ac.grim.grimac.api.packet.world.enums.Leaves leaves) {
+        this.leaves = leaves;
+    }
+
+    private static final Leaves[] API_MAP = values();
+
+    public static Leaves of(ac.grim.grimac.api.packet.world.enums.Leaves api) {
+        return API_MAP[api.ordinal()];
+    }
 }
