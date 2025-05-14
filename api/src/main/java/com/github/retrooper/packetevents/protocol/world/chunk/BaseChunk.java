@@ -80,6 +80,10 @@ public interface BaseChunk extends PacketChunk {
         return new Chunk_v1_7(false, true);
     }
 
+    default PacketBlockState get(PacketClientVersion blockVersion, int x, int y, int z) {
+        return get((ClientVersion) blockVersion, x, y ,z);
+    }
+
     default PacketBlockState get(PacketClientVersion blockVersion, int x, int y, int z, boolean clone) {
         return get((ClientVersion) blockVersion, x, y, z, clone);
     }

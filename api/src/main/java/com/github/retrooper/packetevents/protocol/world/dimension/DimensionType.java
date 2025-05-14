@@ -18,6 +18,8 @@
 
 package com.github.retrooper.packetevents.protocol.world.dimension;
 
+import ac.grim.grimac.api.packet.protocol.PacketClientVersion;
+import ac.grim.grimac.api.packet.world.dimension.PacketDimensionType;
 import com.github.retrooper.packetevents.PacketEvents;
 import com.github.retrooper.packetevents.protocol.mapper.CopyableEntity;
 import com.github.retrooper.packetevents.protocol.mapper.DeepComparableEntity;
@@ -37,7 +39,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.OptionalLong;
 
-public interface DimensionType extends MappedEntity, CopyableEntity<DimensionType>, DeepComparableEntity {
+public interface DimensionType extends MappedEntity, CopyableEntity<DimensionType>, DeepComparableEntity, PacketDimensionType {
 
     OptionalLong getFixedTime();
 
@@ -174,5 +176,9 @@ public interface DimensionType extends MappedEntity, CopyableEntity<DimensionTyp
             compound.setTag("shrunk", new NBTByte(dimensionType.isShrunk()));
         }
         return compound;
+    }
+
+    default int getId(PacketClientVersion version) {
+        return getId((ClientVersion) version);
     }
 }

@@ -18,7 +18,10 @@
 
 package com.github.retrooper.packetevents.protocol.potion;
 
+import ac.grim.grimac.api.packet.potions.PacketPotionType;
+import ac.grim.grimac.api.packet.protocol.PacketClientVersion;
 import com.github.retrooper.packetevents.protocol.mapper.MappedEntity;
+import com.github.retrooper.packetevents.protocol.player.ClientVersion;
 
 /**
  * Potion types are the individually applied potion effects.<br>
@@ -26,6 +29,8 @@ import com.github.retrooper.packetevents.protocol.mapper.MappedEntity;
  * <p>
  * For potions brewable in survival, see {@link Potions}.
  */
-public interface PotionType extends MappedEntity {
-
+public interface PotionType extends MappedEntity, PacketPotionType {
+    default int getId(PacketClientVersion version) {
+        return getId((ClientVersion) version);
+    }
 }
