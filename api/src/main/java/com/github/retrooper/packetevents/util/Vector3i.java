@@ -18,6 +18,7 @@
 
 package com.github.retrooper.packetevents.util;
 
+import ac.grim.grimac.api.packet.util.vec.ImmutableVector3i;
 import com.github.retrooper.packetevents.PacketEvents;
 import com.github.retrooper.packetevents.manager.server.ServerVersion;
 import com.github.retrooper.packetevents.protocol.world.BlockFace;
@@ -34,7 +35,7 @@ import java.util.Objects;
  * @author retrooper
  * @since 1.7
  */
-public class Vector3i {
+public class Vector3i implements ImmutableVector3i {
     /**
      * X (coordinate/angle/whatever you wish)
      */

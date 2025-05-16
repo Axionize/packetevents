@@ -18,6 +18,8 @@
 
 package com.github.retrooper.packetevents.wrapper.play.client;
 
+import ac.grim.grimac.api.packet.item.PacketItemStack;
+import ac.grim.grimac.api.packet.types.client.play.ClientPlayerBlockPlacementPacket;
 import com.github.retrooper.packetevents.event.PacketReceiveEvent;
 import com.github.retrooper.packetevents.manager.server.ServerVersion;
 import com.github.retrooper.packetevents.protocol.item.ItemStack;
@@ -30,13 +32,13 @@ import com.github.retrooper.packetevents.wrapper.PacketWrapper;
 
 import java.util.Optional;
 
-public class WrapperPlayClientPlayerBlockPlacement extends PacketWrapper<WrapperPlayClientPlayerBlockPlacement> {
+public class WrapperPlayClientPlayerBlockPlacement extends PacketWrapper<WrapperPlayClientPlayerBlockPlacement> implements ClientPlayerBlockPlacementPacket {
     private InteractionHand interactionHand;
     private Vector3i blockPosition;
     private int faceId;
     private BlockFace face;
     private Vector3f cursorPosition;
-    private Optional<ItemStack> itemStack;
+    private Optional<PacketItemStack> itemStack;
     private Optional<Boolean> insideBlock;
     private Optional<Boolean> worldBorderHit;
     private int sequence;
@@ -139,7 +141,7 @@ public class WrapperPlayClientPlayerBlockPlacement extends PacketWrapper<Wrapper
                 writeVarInt(interactionHand.getId());
             } else {
                 writeByte(faceId);
-                writeItemStack(itemStack.orElse(ItemStack.EMPTY));
+                writeItemStack((ItemStack) itemStack.orElse(ItemStack.EMPTY));
                 //Hand is always the main hand
             }
             if (serverVersion.isNewerThanOrEquals(ServerVersion.V_1_11)) {
@@ -211,11 +213,11 @@ public class WrapperPlayClientPlayerBlockPlacement extends PacketWrapper<Wrapper
         this.cursorPosition = cursorPosition;
     }
 
-    public Optional<ItemStack> getItemStack() {
+    public Optional<PacketItemStack> getItemStack() {
         return itemStack;
     }
 
-    public void setItemStack(Optional<ItemStack> itemStack) {
+    public void setItemStack(Optional<PacketItemStack> itemStack) {
         this.itemStack = itemStack;
     }
 
@@ -241,5 +243,9 @@ public class WrapperPlayClientPlayerBlockPlacement extends PacketWrapper<Wrapper
 
     public void setSequence(int sequence) {
         this.sequence = sequence;
+    }
+
+    public ac.grim.grimac.api.packet.world.enums.BlockFace blockFace() {
+        return face.blockFace;
     }
 }
