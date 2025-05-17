@@ -19,7 +19,6 @@ public class Fabric1212ChainLoadEntrypoint implements ChainLoadEntryPoint {
 
     @Override
     public ServerVersion getNativeVersion() {
-        Packet
         return ServerVersion.V_1_21_5;
     }
 }

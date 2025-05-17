@@ -18,13 +18,14 @@
 
 package com.github.retrooper.packetevents.wrapper.play.client;
 
+import ac.grim.grimac.api.packet.types.client.play.ClientStatusPacket;
 import com.github.retrooper.packetevents.event.PacketReceiveEvent;
 import com.github.retrooper.packetevents.manager.server.ServerVersion;
 import com.github.retrooper.packetevents.manager.server.VersionComparison;
 import com.github.retrooper.packetevents.protocol.packettype.PacketType;
 import com.github.retrooper.packetevents.wrapper.PacketWrapper;
 
-public class WrapperPlayClientClientStatus extends PacketWrapper<WrapperPlayClientClientStatus> {
+public class WrapperPlayClientClientStatus extends PacketWrapper<WrapperPlayClientClientStatus> implements ClientStatusPacket {
     private Action action;
 
     public WrapperPlayClientClientStatus(PacketReceiveEvent event) {
@@ -66,16 +67,27 @@ public class WrapperPlayClientClientStatus extends PacketWrapper<WrapperPlayClie
     }
 
     public enum Action {
-        PERFORM_RESPAWN,
-        REQUEST_STATS,
+        PERFORM_RESPAWN(ClientStatusPacket.Action.PERFORM_RESPAWN),
+        REQUEST_STATS(ClientStatusPacket.Action.REQUEST_STATS),
 
         // This only exists on 1.7.10 -> 1.15.2
-        OPEN_INVENTORY_ACHIEVEMENT;
+        OPEN_INVENTORY_ACHIEVEMENT(ClientStatusPacket.Action.OPEN_INVENTORY_ACHIEVEMENT);
+
+        private final ClientStatusPacket.Action clientStatusAction;
+
+        Action(ClientStatusPacket.Action clientStatusAction) {
+            this.clientStatusAction = clientStatusAction;
+        }
 
         private static final Action[] VALUES = values();
 
         public static Action getById(int index) {
             return VALUES[index];
         }
+    }
+
+    @Override
+    public ClientStatusPacket.Action getClientStatusAction() {
+        return action.clientStatusAction;
     }
 }

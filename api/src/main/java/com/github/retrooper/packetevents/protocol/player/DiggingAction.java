@@ -19,13 +19,19 @@
 package com.github.retrooper.packetevents.protocol.player;
 
 public enum DiggingAction {
-    START_DIGGING,
-    CANCELLED_DIGGING,
-    FINISHED_DIGGING,
-    DROP_ITEM_STACK,
-    DROP_ITEM,
-    RELEASE_USE_ITEM,
-    SWAP_ITEM_WITH_OFFHAND;
+    START_DIGGING(ac.grim.grimac.api.packet.player.enums.DiggingAction.START_DIGGING),
+    CANCELLED_DIGGING(ac.grim.grimac.api.packet.player.enums.DiggingAction.CANCELLED_DIGGING),
+    FINISHED_DIGGING(ac.grim.grimac.api.packet.player.enums.DiggingAction.FINISHED_DIGGING),
+    DROP_ITEM_STACK(ac.grim.grimac.api.packet.player.enums.DiggingAction.DROP_ITEM_STACK),
+    DROP_ITEM(ac.grim.grimac.api.packet.player.enums.DiggingAction.DROP_ITEM),
+    RELEASE_USE_ITEM(ac.grim.grimac.api.packet.player.enums.DiggingAction.RELEASE_USE_ITEM),
+    SWAP_ITEM_WITH_OFFHAND(ac.grim.grimac.api.packet.player.enums.DiggingAction.SWAP_ITEM_WITH_OFFHAND);
+
+    public final ac.grim.grimac.api.packet.player.enums.DiggingAction diggingAction;
+
+    DiggingAction(ac.grim.grimac.api.packet.player.enums.DiggingAction diggingAction) {
+        this.diggingAction = diggingAction;
+    }
 
     private static final DiggingAction[] VALUES = values();
 

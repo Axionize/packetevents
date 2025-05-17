@@ -18,6 +18,7 @@
 
 package com.github.retrooper.packetevents.wrapper.play.client;
 
+import ac.grim.grimac.api.packet.types.client.play.ClientClickWindow;
 import com.github.retrooper.packetevents.event.PacketReceiveEvent;
 import com.github.retrooper.packetevents.manager.server.ServerVersion;
 import com.github.retrooper.packetevents.protocol.item.HashedStack;
@@ -31,7 +32,7 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.Optional;
 
-public class WrapperPlayClientClickWindow extends PacketWrapper<WrapperPlayClientClickWindow> {
+public class WrapperPlayClientClickWindow extends PacketWrapper<WrapperPlayClientClickWindow> implements ClientClickWindow {
 
     private static final int MAX_SLOT_COUNT = 128;
 
@@ -296,14 +297,20 @@ public class WrapperPlayClientClickWindow extends PacketWrapper<WrapperPlayClien
     }
 
     public enum WindowClickType {
-        PICKUP,
-        QUICK_MOVE,
-        SWAP,
-        CLONE,
-        THROW,
-        QUICK_CRAFT,
-        PICKUP_ALL,
-        UNKNOWN;
+        PICKUP(ClientClickWindow.WindowClickType.PICKUP),
+        QUICK_MOVE(ClientClickWindow.WindowClickType.QUICK_MOVE),
+        SWAP(ClientClickWindow.WindowClickType.SWAP),
+        CLONE(ClientClickWindow.WindowClickType.CLONE),
+        THROW(ClientClickWindow.WindowClickType.THROW),
+        QUICK_CRAFT(ClientClickWindow.WindowClickType.QUICK_CRAFT),
+        PICKUP_ALL(ClientClickWindow.WindowClickType.PICKUP_ALL),
+        UNKNOWN(ClientClickWindow.WindowClickType.UNKNOWN);
+
+        private final ClientClickWindow.WindowClickType clickType;
+
+        WindowClickType(ClientClickWindow.WindowClickType clickType) {
+            this.clickType = clickType;
+        }
 
         public static final WindowClickType[] VALUES = values();
 
@@ -315,5 +322,10 @@ public class WrapperPlayClientClickWindow extends PacketWrapper<WrapperPlayClien
 
             return VALUES[id];
         }
+    }
+
+    @Override
+    public ClientClickWindow.WindowClickType windowClickType() {
+        return windowClickType.clickType;
     }
 }

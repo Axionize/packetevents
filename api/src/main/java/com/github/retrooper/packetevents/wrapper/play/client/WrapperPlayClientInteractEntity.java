@@ -18,6 +18,7 @@
 
 package com.github.retrooper.packetevents.wrapper.play.client;
 
+import ac.grim.grimac.api.packet.types.client.play.ClientInteractEntityPacket;
 import com.github.retrooper.packetevents.event.PacketReceiveEvent;
 import com.github.retrooper.packetevents.manager.server.ServerVersion;
 import com.github.retrooper.packetevents.protocol.packettype.PacketType;
@@ -32,7 +33,7 @@ import java.util.Optional;
  * The vanilla server discards this packet if the entity being attacked is not within a 4-unit radius of the player's position.
  * Please note that this packet is NOT sent whenever the client middle-clicks, the {@link WrapperPlayClientCreativeInventoryAction} packet is sent instead.
  */
-public class WrapperPlayClientInteractEntity extends PacketWrapper<WrapperPlayClientInteractEntity> {
+public class WrapperPlayClientInteractEntity extends PacketWrapper<WrapperPlayClientInteractEntity> implements ClientInteractEntityPacket {
     private int entityID;
     private InteractAction interactAction;
     private Optional<Vector3f> target;
@@ -164,7 +165,21 @@ public class WrapperPlayClientInteractEntity extends PacketWrapper<WrapperPlayCl
     }
 
     public enum InteractAction {
-        INTERACT, ATTACK, INTERACT_AT;
+        INTERACT(ClientInteractEntityPacket.InteractAction.INTERACT),
+        ATTACK(ClientInteractEntityPacket.InteractAction.ATTACK),
+        INTERACT_AT(ClientInteractEntityPacket.InteractAction.INTERACT_AT);
+
+        private final ClientInteractEntityPacket.InteractAction interactAction;
+
+        InteractAction(ClientInteractEntityPacket.InteractAction interactAction) {
+            this.interactAction = interactAction;
+        }
+
         public static final InteractAction[] VALUES = values();
+    }
+
+    @Override
+    public ClientInteractEntityPacket.InteractAction action() {
+        return interactAction.interactAction;
     }
 }

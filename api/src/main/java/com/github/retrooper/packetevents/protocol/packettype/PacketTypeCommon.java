@@ -18,12 +18,13 @@
 
 package com.github.retrooper.packetevents.protocol.packettype;
 
+import ac.grim.grimac.api.packet.types.PacketType;
 import com.github.retrooper.packetevents.protocol.PacketSide;
 import com.github.retrooper.packetevents.protocol.player.ClientVersion;
 import com.github.retrooper.packetevents.wrapper.PacketWrapper;
 import org.jetbrains.annotations.Nullable;
 
-public interface PacketTypeCommon {
+public interface PacketTypeCommon extends PacketType {
 
     default String getName() {
         return ((Enum<?>)this).name();

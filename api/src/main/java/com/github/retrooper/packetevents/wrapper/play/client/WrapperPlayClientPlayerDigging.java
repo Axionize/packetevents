@@ -18,6 +18,7 @@
 
 package com.github.retrooper.packetevents.wrapper.play.client;
 
+import ac.grim.grimac.api.packet.types.client.play.ClientPlayerDiggingPacket;
 import com.github.retrooper.packetevents.event.PacketReceiveEvent;
 import com.github.retrooper.packetevents.manager.server.ServerVersion;
 import com.github.retrooper.packetevents.protocol.packettype.PacketType;
@@ -26,7 +27,7 @@ import com.github.retrooper.packetevents.protocol.world.BlockFace;
 import com.github.retrooper.packetevents.util.Vector3i;
 import com.github.retrooper.packetevents.wrapper.PacketWrapper;
 
-public class WrapperPlayClientPlayerDigging extends PacketWrapper<WrapperPlayClientPlayerDigging> {
+public class WrapperPlayClientPlayerDigging extends PacketWrapper<WrapperPlayClientPlayerDigging> implements ClientPlayerDiggingPacket {
     private DiggingAction action;
     private Vector3i blockPosition;
     private BlockFace blockFace;
@@ -147,5 +148,10 @@ public class WrapperPlayClientPlayerDigging extends PacketWrapper<WrapperPlayCli
 
     public void setSequence(int sequence) {
         this.sequence = sequence;
+    }
+
+    @Override
+    public ac.grim.grimac.api.packet.player.enums.DiggingAction action() {
+        return action.diggingAction;
     }
 }

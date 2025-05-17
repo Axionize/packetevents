@@ -18,12 +18,13 @@
 
 package com.github.retrooper.packetevents.wrapper.play.client;
 
+import ac.grim.grimac.api.packet.types.client.play.ClientEntityActionPacket;
 import com.github.retrooper.packetevents.event.PacketReceiveEvent;
 import com.github.retrooper.packetevents.manager.server.ServerVersion;
 import com.github.retrooper.packetevents.protocol.packettype.PacketType;
 import com.github.retrooper.packetevents.wrapper.PacketWrapper;
 
-public class WrapperPlayClientEntityAction extends PacketWrapper<WrapperPlayClientEntityAction> {
+public class WrapperPlayClientEntityAction extends PacketWrapper<WrapperPlayClientEntityAction> implements ClientEntityActionPacket {
     private int entityID;
     private Action action;
     private int jumpBoost;
@@ -96,15 +97,21 @@ public class WrapperPlayClientEntityAction extends PacketWrapper<WrapperPlayClie
     }
 
     public enum Action {
-        START_SNEAKING,
-        STOP_SNEAKING,
-        LEAVE_BED,
-        START_SPRINTING,
-        STOP_SPRINTING,
-        START_JUMPING_WITH_HORSE,
-        STOP_JUMPING_WITH_HORSE,
-        OPEN_HORSE_INVENTORY,
-        START_FLYING_WITH_ELYTRA;
+        START_SNEAKING(ClientEntityActionPacket.Action.START_SNEAKING),
+        STOP_SNEAKING(ClientEntityActionPacket.Action.STOP_SNEAKING),
+        LEAVE_BED(ClientEntityActionPacket.Action.LEAVE_BED),
+        START_SPRINTING(ClientEntityActionPacket.Action.START_SPRINTING),
+        STOP_SPRINTING(ClientEntityActionPacket.Action.STOP_SPRINTING),
+        START_JUMPING_WITH_HORSE(ClientEntityActionPacket.Action.START_JUMPING_WITH_HORSE),
+        STOP_JUMPING_WITH_HORSE(ClientEntityActionPacket.Action.STOP_JUMPING_WITH_HORSE),
+        OPEN_HORSE_INVENTORY(ClientEntityActionPacket.Action.OPEN_HORSE_INVENTORY),
+        START_FLYING_WITH_ELYTRA(ClientEntityActionPacket.Action.START_FLYING_WITH_ELYTRA);
+
+        private final ClientEntityActionPacket.Action action;
+
+        Action(ClientEntityActionPacket.Action action) {
+            this.action = action;
+        }
 
         private static final Action[] VALUES = values();
 
@@ -130,5 +137,10 @@ public class WrapperPlayClientEntityAction extends PacketWrapper<WrapperPlayClie
             }
             return action;
         }
+    }
+
+    @Override
+    public ClientEntityActionPacket.Action action() {
+        return action.action;
     }
 }

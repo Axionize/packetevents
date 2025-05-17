@@ -308,7 +308,7 @@ public final class PacketType {
 
     public static class Handshaking {
 
-        public enum Client implements PacketTypeConstant, ServerBoundPacket, ac.grim.grimac.api.packet.types.PacketType {
+        public enum Client implements PacketTypeConstant, ServerBoundPacket {
 
             HANDSHAKE(0, WrapperHandshakingClientHandshake.class),
             /**
@@ -352,7 +352,7 @@ public final class PacketType {
             }
         }
 
-        public enum Server implements PacketTypeConstant, ClientBoundPacket, ac.grim.grimac.api.packet.types.PacketType {
+        public enum Server implements PacketTypeConstant, ClientBoundPacket {
 
             LEGACY_SERVER_LIST_RESPONSE(0xFE, null),
             ;
@@ -388,7 +388,7 @@ public final class PacketType {
 
     public static class Status {
 
-        public enum Client implements PacketTypeConstant, ServerBoundPacket, ac.grim.grimac.api.packet.types.PacketType {
+        public enum Client implements PacketTypeConstant, ServerBoundPacket {
 
             REQUEST(0x00, WrapperStatusClientRequest.class),
             PING(0x01, WrapperStatusClientPing.class),
@@ -428,7 +428,7 @@ public final class PacketType {
             }
         }
 
-        public enum Server implements PacketTypeConstant, ClientBoundPacket, ac.grim.grimac.api.packet.types.PacketType {
+        public enum Server implements PacketTypeConstant, ClientBoundPacket {
 
             RESPONSE(0x00, WrapperStatusServerResponse.class),
             PONG(0x01, WrapperStatusServerPong.class),
@@ -471,7 +471,7 @@ public final class PacketType {
 
     public static class Login {
 
-        public enum Client implements PacketTypeConstant, ServerBoundPacket, ac.grim.grimac.api.packet.types.PacketType {
+        public enum Client implements PacketTypeConstant, ServerBoundPacket {
 
             LOGIN_START(0x00, WrapperLoginClientLoginStart.class),
             ENCRYPTION_RESPONSE(0x01, WrapperLoginClientEncryptionResponse.class),
@@ -527,7 +527,7 @@ public final class PacketType {
             }
         }
 
-        public enum Server implements PacketTypeConstant, ClientBoundPacket, ac.grim.grimac.api.packet.types.PacketType {
+        public enum Server implements PacketTypeConstant, ClientBoundPacket {
 
             DISCONNECT(0x00, WrapperLoginServerDisconnect.class),
             ENCRYPTION_REQUEST(0x01, WrapperLoginServerEncryptionRequest.class),
@@ -590,7 +590,7 @@ public final class PacketType {
     // Added in 1.20.2
     public static class Configuration {
 
-        public enum Client implements PacketTypeCommon, ServerBoundPacket, ac.grim.grimac.api.packet.types.PacketType {
+        public enum Client implements PacketTypeCommon, ServerBoundPacket {
 
             CLIENT_SETTINGS(WrapperConfigClientSettings.class),
             PLUGIN_MESSAGE(WrapperConfigClientPluginMessage.class),
@@ -672,7 +672,7 @@ public final class PacketType {
             }
         }
 
-        public enum Server implements PacketTypeCommon, ClientBoundPacket, ac.grim.grimac.api.packet.types.PacketType {
+        public enum Server implements PacketTypeCommon, ClientBoundPacket {
 
             PLUGIN_MESSAGE(WrapperConfigServerPluginMessage.class),
             DISCONNECT(WrapperConfigServerDisconnect.class),
@@ -772,7 +772,7 @@ public final class PacketType {
 
     public static class Play {
 
-        public enum Client implements PacketTypeCommon, ServerBoundPacket, ac.grim.grimac.api.packet.types.PacketType {
+        public enum Client implements PacketTypeCommon, ServerBoundPacket {
 
             // Packets which no longer exist on the latest version
             CHAT_PREVIEW(WrapperPlayClientChatPreview.class),
@@ -997,7 +997,7 @@ public final class PacketType {
             }
         }
 
-        public enum Server implements PacketTypeCommon, ClientBoundPacket, ac.grim.grimac.api.packet.types.PacketType {
+        public enum Server implements PacketTypeCommon, ClientBoundPacket {
 
             // Packets which are no longer exist on the latest version
             SET_COMPRESSION(WrapperPlayServerSetCompression.class),
