@@ -18,6 +18,7 @@
 
 package com.github.retrooper.packetevents.event;
 
+import ac.grim.grimac.api.packet.types.event.PacketListenerInterface;
 import com.github.retrooper.packetevents.protocol.player.User;
 
 public class UserDisconnectEvent extends PacketEvent implements UserEvent {
@@ -33,7 +34,7 @@ public class UserDisconnectEvent extends PacketEvent implements UserEvent {
     }
 
     @Override
-    public void call(PacketListenerCommon listener) {
-        listener.onUserDisconnect(this);
+    public void call(PacketListenerInterface listener) {
+        ((PacketListenerCommon) listener).onUserDisconnect(this);
     }
 }

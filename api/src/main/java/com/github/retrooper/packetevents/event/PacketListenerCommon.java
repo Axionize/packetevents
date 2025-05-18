@@ -18,6 +18,8 @@
 
 package com.github.retrooper.packetevents.event;
 
+import ac.grim.grimac.api.packet.types.event.PacketListenerInterface;
+
 import java.lang.reflect.Method;
 import java.util.List;
 import java.util.Map;
@@ -28,7 +30,7 @@ import java.util.Map;
  * @author retrooper
  * @since 1.8
  */
-public abstract class PacketListenerCommon {
+public abstract class PacketListenerCommon implements PacketListenerInterface {
     private final PacketListenerPriority priority;
 
     public PacketListenerCommon(PacketListenerPriority priority) {
@@ -52,13 +54,25 @@ public abstract class PacketListenerCommon {
     public void onUserDisconnect(UserDisconnectEvent event) {
     }
 
-    void onPacketReceive(PacketReceiveEvent event) {
+    public void onPacketReceive(PacketReceiveEvent event) {
     }
 
-    void onPacketSend(PacketSendEvent event) {
+    public void onPacketSend(PacketSendEvent event) {
+    }
+
+    public void onPacketReceive(ac.grim.grimac.api.packet.types.event.PacketReceiveEvent event) {
+        this.onPacketReceive((PacketReceiveEvent) event);
+    }
+
+    public void onPacketSend(ac.grim.grimac.api.packet.types.event.PacketSendEvent event) {
+        this.onPacketSend((PacketSendEvent) event);
     }
 
     public void onPacketEventExternal(PacketEvent event) {
     }
 
+    @Override
+    public int getListenerPriority() {
+        return priority.ordinal();
+    }
 }

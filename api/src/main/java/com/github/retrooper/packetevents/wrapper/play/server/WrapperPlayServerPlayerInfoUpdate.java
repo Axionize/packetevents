@@ -48,13 +48,13 @@ public class WrapperPlayServerPlayerInfoUpdate extends PacketWrapper<WrapperPlay
         UPDATE_LATENCY,
         UPDATE_DISPLAY_NAME,
         /**
-         * Updates the order in which the player is listed in the tablist.<br>
-         * Added with 1.21.2
+         * Modifies the player's display order within the tablist.
+         * <br>Added in 1.21.2.
          */
         UPDATE_LIST_ORDER,
         /**
-         * Updates whether the outer skin layer (hat) of the player will be shown in tablist.<br>
-         * Added with 1.21.4
+         * Controls the visibility of the player's outer skin layer (hat) in the tablist.
+         * <br>Added in 1.21.4.
          */
         UPDATE_HAT;
 

@@ -52,7 +52,7 @@ public class WrapperPlayServerSetPassengers extends PacketWrapper<WrapperPlaySer
     public void copy(WrapperPlayServerSetPassengers wrapper) {
         entityId = wrapper.entityId;
         passengers = wrapper.passengers;
-    }
+    }getProperties
 
     public int getEntityId() {
         return entityId;

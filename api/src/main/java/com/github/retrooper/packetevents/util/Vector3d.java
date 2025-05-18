@@ -18,6 +18,7 @@
 
 package com.github.retrooper.packetevents.util;
 
+import ac.grim.grimac.api.packet.util.vec.ImmutableVector3d;
 import com.github.retrooper.packetevents.protocol.nbt.NBT;
 import com.github.retrooper.packetevents.protocol.nbt.NBTDouble;
 import com.github.retrooper.packetevents.protocol.nbt.NBTList;
@@ -37,7 +38,7 @@ import java.util.Objects;
  * @author retrooper
  * @since 1.8
  */
-public class Vector3d {
+public class Vector3d implements ImmutableVector3d {
     /**
      * X (coordinate/angle/whatever you wish)
      */

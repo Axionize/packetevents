@@ -18,6 +18,7 @@
 
 package com.github.retrooper.packetevents.event;
 
+import ac.grim.grimac.api.packet.types.event.PacketListenerInterface;
 import com.github.retrooper.packetevents.protocol.player.User;
 
 public class UserLoginEvent extends PacketEvent implements CallableEvent, UserEvent, PlayerEvent {
@@ -40,7 +41,7 @@ public class UserLoginEvent extends PacketEvent implements CallableEvent, UserEv
     }
 
     @Override
-    public void call(PacketListenerCommon listener) {
-        listener.onUserLogin(this);
+    public void call(PacketListenerInterface listener) {
+        ((PacketListenerCommon) listener).onUserLogin(this);
     }
 }

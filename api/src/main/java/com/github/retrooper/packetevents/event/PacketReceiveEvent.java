@@ -18,6 +18,7 @@
 
 package com.github.retrooper.packetevents.event;
 
+import ac.grim.grimac.api.packet.types.event.PacketListenerInterface;
 import com.github.retrooper.packetevents.exception.PacketProcessException;
 import com.github.retrooper.packetevents.manager.server.ServerVersion;
 import com.github.retrooper.packetevents.netty.buffer.ByteBufHelper;
@@ -25,7 +26,7 @@ import com.github.retrooper.packetevents.protocol.PacketSide;
 import com.github.retrooper.packetevents.protocol.packettype.PacketTypeCommon;
 import com.github.retrooper.packetevents.protocol.player.User;
 
-public class PacketReceiveEvent extends ProtocolPacketEvent {
+public class PacketReceiveEvent extends ProtocolPacketEvent implements ac.grim.grimac.api.packet.types.event.PacketReceiveEvent {
     protected PacketReceiveEvent(Object channel, User user, Object player, Object rawByteBuf,
                                  boolean autoProtocolTranslation) throws PacketProcessException {
         super(PacketSide.CLIENT, channel, user, player, rawByteBuf, autoProtocolTranslation);
@@ -40,7 +41,7 @@ public class PacketReceiveEvent extends ProtocolPacketEvent {
     }
 
     @Override
-    public void call(PacketListenerCommon listener) {
+    public void call(PacketListenerInterface listener) {
         listener.onPacketReceive(this);
     }
 

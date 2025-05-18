@@ -18,6 +18,7 @@
 
 package com.github.retrooper.packetevents.event;
 
+import ac.grim.grimac.api.packet.types.event.PacketListenerInterface;
 import com.github.retrooper.packetevents.protocol.player.User;
 
 public class UserConnectEvent extends PacketEvent implements CancellableEvent, UserEvent{
@@ -44,7 +45,7 @@ public class UserConnectEvent extends PacketEvent implements CancellableEvent, U
     }
 
     @Override
-    public void call(PacketListenerCommon listener) {
-        listener.onUserConnect(this);
+    public void call(PacketListenerInterface listener) {
+        ((PacketListenerCommon) listener).onUserConnect(this);
     }
 }

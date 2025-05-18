@@ -18,6 +18,7 @@
 
 package com.github.retrooper.packetevents.event;
 
+import ac.grim.grimac.api.packet.types.event.PacketListenerInterface;
 import com.github.retrooper.packetevents.PacketEvents;
 import com.github.retrooper.packetevents.exception.InvalidHandshakeException;
 import org.jetbrains.annotations.Nullable;
@@ -48,10 +49,10 @@ public class EventManager {
     //1. On each modification Collections.synchronizedMap synchronizes the whole Map object, while ConcurrentHashMap only it's internal, currently modified Node
     //2. ConcurrentHashMap won't fail in a multi-thread environment, while Collections.synchronizedMap is said to have a lot of potential problems,
     //being a generalized method for synchronization
-    private final Map<PacketListenerPriority, Set<PacketListenerCommon>> listenersMap = new ConcurrentHashMap<>();
+    private final Map<Integer, Set<PacketListenerInterface>> listenersMap = new ConcurrentHashMap<>();
     //Since reads greatly outnumber writes, create an array for the best possible iteration time
     //Updated as a whole on writes, no index modifications are allowed
-    private volatile PacketListenerCommon[] listeners = new PacketListenerCommon[0];
+    private volatile PacketListenerInterface[] listeners = new PacketListenerInterface[0];
 
 
     /**
@@ -79,7 +80,7 @@ public class EventManager {
      * @param postCallListenerAction The action to be ran after all the listeners have finished processing
      */
     public void callEvent(PacketEvent event, @Nullable Runnable postCallListenerAction) {
-        for (PacketListenerCommon listener : listeners) {
+        for (PacketListenerInterface listener : listeners) {
             try {
                 event.call(listener);
             } catch (Exception t) {
@@ -160,26 +161,32 @@ public class EventManager {
     //is overridden by its non-up-to-date value, simply because it finished a bit later than the most recent update)
     private void recalculateListeners() {
         synchronized (this) {
-            List<PacketListenerCommon> list = new ArrayList<>();
+            List<PacketListenerInterface> list = new ArrayList<>();
             //adds from LOWEST to MONITOR, so in the correct order
             for (PacketListenerPriority priority : PacketListenerPriority.values()) {
-                Set<PacketListenerCommon> set = this.listenersMap.get(priority);
+                Set<PacketListenerInterface> set = this.listenersMap.get(priority);
                 if (set != null) list.addAll(set);
             }
-            this.listeners = list.toArray(new PacketListenerCommon[0]);
+            this.listeners = list.toArray(new PacketListenerInterface[0]);
         }
     }
 
     //Internal registration methods, specifically separated for lesser overhead when registering an array of Listeners
 
-    private void registerListenerNoRecalculation(PacketListenerCommon listener) {
-        Set<PacketListenerCommon> listenerSet = this.listenersMap.computeIfAbsent(listener.getPriority(), p -> new CopyOnWriteArraySet<>());
+    private void registerListenerNoRecalculation(PacketListenerInterface listener) {
+        Set<PacketListenerInterface> listenerSet = this.listenersMap.computeIfAbsent(listener.getListenerPriority(), p -> new CopyOnWriteArraySet<>());
         listenerSet.add(listener);
     }
 
     //Returns true if the listener was removed, so a modification occurred
-    private boolean unregisterListenerNoRecalculation(PacketListenerCommon listener) {
-        Set<PacketListenerCommon> listenerSet = this.listenersMap.get(listener.getPriority());
+    private boolean unregisterListenerNoRecalculation(PacketListenerInterface listener) {
+        Set<PacketListenerInterface> listenerSet = this.listenersMap.get(listener.getListenerPriority());
         return listenerSet != null && listenerSet.remove(listener);
+    }
+
+    public PacketListenerInterface registerListener(PacketListenerInterface listener) {
+        this.registerListenerNoRecalculation(listener);
+        this.recalculateListeners();
+        return listener;
     }
 }

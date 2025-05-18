@@ -18,6 +18,7 @@
 
 package com.github.retrooper.packetevents.event;
 
+import ac.grim.grimac.api.packet.types.event.PacketListenerInterface;
 import com.github.retrooper.packetevents.event.PacketEvent;
 import com.github.retrooper.packetevents.event.PacketListenerAbstract;
 
@@ -32,7 +33,7 @@ import com.github.retrooper.packetevents.event.PacketListenerAbstract;
  * @since 1.8
  */
 public interface CallableEvent {
-    default void call(PacketListenerCommon listener) {
-        listener.onPacketEventExternal((PacketEvent) this);
+    default void call(PacketListenerInterface listener) {
+        ((PacketListenerCommon) listener).onPacketEventExternal((PacketEvent) this);
     }
 }

@@ -260,7 +260,7 @@ public class WrapperPlayServerPlayerInfo extends PacketWrapper<WrapperPlayServer
 
         public SignatureData getSignatureData() {
             return signatureData;
-        }
+        }Attributes
 
         public void setSignatureData(SignatureData signatureData) {
             this.signatureData = signatureData;

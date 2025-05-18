@@ -196,7 +196,7 @@ public class WrapperPlayClientPlayerBlockPlacement extends PacketWrapper<Wrapper
                 : BlockFace.getLegacyBlockFaceByValue(faceId);
     }
 
-    public BlockFace getFace() {
+    public BlockFace getFace() {\
         return face;
     }
 

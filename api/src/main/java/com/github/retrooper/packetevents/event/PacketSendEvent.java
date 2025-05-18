@@ -18,6 +18,7 @@
 
 package com.github.retrooper.packetevents.event;
 
+import ac.grim.grimac.api.packet.types.event.PacketListenerInterface;
 import com.github.retrooper.packetevents.event.simple.PacketHandshakeSendEvent;
 import com.github.retrooper.packetevents.exception.PacketProcessException;
 import com.github.retrooper.packetevents.manager.server.ServerVersion;
@@ -29,7 +30,7 @@ import com.github.retrooper.packetevents.protocol.player.User;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PacketSendEvent extends ProtocolPacketEvent {
+public class PacketSendEvent extends ProtocolPacketEvent implements ac.grim.grimac.api.packet.types.event.PacketSendEvent {
     private List<Runnable> tasksAfterSend = null;
 
     protected PacketSendEvent(Object channel, User user, Object player, Object rawByteBuf,
@@ -47,7 +48,7 @@ public class PacketSendEvent extends ProtocolPacketEvent {
     }
 
     @Override
-    public void call(PacketListenerCommon listener) {
+    public void call(PacketListenerInterface listener) {
         listener.onPacketSend(this);
     }
 

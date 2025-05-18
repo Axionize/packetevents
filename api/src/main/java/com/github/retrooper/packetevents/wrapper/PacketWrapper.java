@@ -1519,14 +1519,4 @@ public class PacketWrapper<T extends PacketWrapper<T>> implements SendablePacket
     @FunctionalInterface
     public interface Writer<T> extends BiConsumer<PacketWrapper<?>, T> {
     }
-
-    // TODO (Packet-Rewrite) temporary constructors
-    public PacketWrapper(ac.grim.grimac.api.packet.types.event.PacketReceiveEvent event) {
-        this((PacketReceiveEvent) event);
-    }
-
-    // TODO (Packet-Rewrite) temporary constructors
-    public PacketWrapper(ac.grim.grimac.api.packet.types.event.PacketSendEvent event) {
-        this((PacketSendEvent) event);
-    }
 }
